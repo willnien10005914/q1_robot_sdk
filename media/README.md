@@ -11,10 +11,12 @@
 
 ## Design notes
 
-Unified Quanta Q1 Edu humanoid across all shots:
+Unified Quanta Q1 **Education** humanoid across all shots:
 - Soft **white** skinsuit body
 - Matte **black** head with cyan dual-cam eyes
 - QDD actuators + 3-finger hand
 - Same humanoid in **wheel** and **biped** modes (no AMR / box robots)
 
 Branding uses the Quanta **Q** mark only (no national flags).
+
+“Edu” / “Education” in filenames and captions means the **developer / secondary-development SKU** (tunable motors, PPO, VLA) — not a classroom product.

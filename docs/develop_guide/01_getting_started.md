@@ -51,7 +51,7 @@ Expected output:
 ./bin/q1_helloworld --iface eth0
 ```
 
-Network tips (same class of issues Edu users hit):
+Network tips:
 
 1. PC and robot on the same L2 segment / VLAN.
 2. Disable VPN / unexpected firewall on DDS multicast ports.

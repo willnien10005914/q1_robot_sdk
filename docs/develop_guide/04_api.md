@@ -1,6 +1,6 @@
 # 04 — API
 
-High-level clients talk to onboard services with versioned API IDs (same client/server style as Edu-class `LocoClient`).
+High-level clients talk to onboard services with versioned API IDs (JSON request/response over DDS).
 
 ## Clients
 
@@ -8,7 +8,7 @@ High-level clients talk to onboard services with versioned API IDs (same client/
 |--------|--------------|---------|
 | `q1::robot::LocoClient` | `sport` | Wheeled locomotion FSM + velocity |
 | `q1::robot::ArmClient` | `arm` | Dual-arm joint / Cartesian helpers |
-| `q1::robot::InteractionClient` | `interaction` | Named Edu action packs |
+| `q1::robot::InteractionClient` | `interaction` | Named action packs (predefined on Standard; extensible on Education) |
 | `q1::robot::AudioClient` | `audio` | TTS / beep (optional) |
 
 ## Loco API IDs (excerpt)
