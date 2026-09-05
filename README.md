@@ -8,7 +8,7 @@
 
 ## Concept demo (Edu wheel-foot Q1)
 
-Form factor inspired by wheel-foot humanoids such as [X2-N](https://www.tech360.tv/china-unveils-x2-n-humanoid-robot-wheels-feet-mobility) (roll on wheel-feet + humanoid arms). **Education-first SDK**: schools train once; customers fine-tune for home clean/organize, logistics cargo, performance sports (ball toss), calligraphy, and piano.
+**White** wheel-foot Edu humanoid with **QDD series** actuators and a **3-finger dexterous hand** — distinct Taiwan MIT design (not a clone of [X2-N](https://www.tech360.tv/china-unveils-x2-n-humanoid-robot-wheels-feet-mobility)). Built with **Quanta Computer (廣達電腦)** Taiwan manufacturing collaboration in mind. Education-first: schools train once; customers fine-tune for home clean/organize, logistics, sports, calligraphy, and piano.
 
 <p align="center">
   <img src="media/q1_edu_wheel_demo.gif" alt="Q1 Edu wheel-foot humanoid concept demo" width="960" />
@@ -33,21 +33,23 @@ Form factor inspired by wheel-foot humanoids such as [X2-N](https://www.tech360.
 
 | Scene | Skill path |
 |-------|------------|
-| Wheel-foot mobility | `LocoClient` roll / balance on wheel feet |
+| Wheel-foot mobility | `LocoClient` + **QDD** joint torque / wheel roll |
 | Education lab | Classroom bring-up + teleop |
 | Customer fine-tune | RL / imitation train → deploy |
 | Home clean & organize | Customer-trained household pack |
 | Logistics & cargo | Carry / last-meter transport pack |
-| Performance sports | Soft-ball toss / play demos |
-| Calligraphy | Cultural performance pack |
-| Piano | Music classroom pack |
+| Performance sports | **3-finger** soft-ball toss / play demos |
+| Calligraphy | **3-finger** brush cultural pack |
+| Piano | **3-finger** music classroom pack |
 
 | Layer | What you get |
 |-------|----------------|
 | **DDS** | Real-time `rt/*` topics for lowcmd / lowstate / wheel odom |
 | **High-level API** | `LocoClient`, `ArmClient`, `InteractionClient` (JSON request/response over DDS) |
 | **ROS 2** | `q1_msgs`, `q1_driver`, `q1_bringup`, teleop nodes |
-| **Basic motion** | Differential drive velocity, soft-stop, pose hold, arm joint trajectories |
+| **Basic motion** | Wheel-foot loco + **QDD** joint control, soft-stop, arm trajectories |
+| **Dexterous hand** | 3-finger end-effector API (grasp / brush / key press) |
+| **Manufacture** | Taiwan **MIT** · Quanta Computer (廣達電腦) collaboration concept |
 | **RL / AI** | `q1_rl_gym` — Train → Play → Sim2Sim → Sim2Real |
 | **Use cases** | Edu train → home clean / logistics / sports / calligraphy / piano |
 
