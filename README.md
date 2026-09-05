@@ -45,12 +45,12 @@ Consistent **Quanta Computer** native design: matte **black dual-camera head**, 
   <img src="media/cartoon/q1_basic_transform.gif" alt="Q1 transforms wheel to biped" width="100%">
 </td>
 <td width="50%" align="center">
-  <img src="media/cartoon/q1_cartoon_hero.gif" alt="Q1 wheel and biped modes" width="100%">
+  <img src="media/cartoon/q1_basic_learn_loco.gif" alt="Q1 learns many locomotion skills" width="100%">
 </td>
 </tr>
 <tr>
 <td><b>It transforms.</b> Ankle reconfiguration between wheel drive and biped feet.</td>
-<td><b>Wheel + biped.</b> Same Q1 character — two locomotion modes.</td>
+<td><b>It learns locomotion.</b> Train wheel, walk, hop, turn, and more in the Edu RL path.</td>
 </tr>
 </table>
 
