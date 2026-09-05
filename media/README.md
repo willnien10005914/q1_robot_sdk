@@ -11,11 +11,10 @@
 
 ## Design notes
 
-Quanta Computer native Q1 Edu humanoid:
-- Black dual-camera head
-- Soft fabric skinsuit
-- QDD series actuators
-- 3-finger dexterous hand
-- Transformable wheel-foot ↔ biped
+Unified Quanta Q1 Edu humanoid across all shots:
+- Soft **white** skinsuit body
+- Matte **black** head with cyan dual-cam eyes
+- QDD actuators + 3-finger hand
+- Same humanoid in **wheel** and **biped** modes (no AMR / box robots)
 
 Branding uses the Quanta **Q** mark only (no national flags).
