@@ -26,10 +26,10 @@
     <light pos="0 0 4" dir="0 0 -1"/>
     <geom name="floor" type="plane" size="25 25 0.05" material="grid"/>
 
-    <body name="base" pos="0 0 0.72">
+    <body name="base" pos="0 0 0.78">
       <freejoint name="root"/>
-      <inertial pos="0 0 0.05" mass="6" diaginertia="0.05 0.06 0.04"/>
-      <geom type="box" size="0.11 0.09 0.08" pos="0 0 0.08" material="pelvis"/>
+      <inertial pos="0 0 0.02" mass="7" diaginertia="0.06 0.07 0.05"/>
+      <geom type="box" size="0.12 0.10 0.08" pos="0 0 0.08" material="pelvis"/>
       <site name="imu" pos="0 0 0.08" size="0.01"/>
 
       <body name="torso_mid" pos="0 0 0.16">
@@ -116,10 +116,10 @@
   </worldbody>
 
   <actuator>
-    <motor name="l_drive" joint="l_wheel_inner" gear="8" ctrlrange="-1 1"/>
-    <motor name="l_drive2" joint="l_wheel_outer" gear="8" ctrlrange="-1 1"/>
-    <motor name="r_drive" joint="r_wheel_inner" gear="8" ctrlrange="-1 1"/>
-    <motor name="r_drive2" joint="r_wheel_outer" gear="8" ctrlrange="-1 1"/>
+    <motor name="l_drive" joint="l_wheel_inner" gear="6" ctrlrange="-1 1"/>
+    <motor name="l_drive2" joint="l_wheel_outer" gear="6" ctrlrange="-1 1"/>
+    <motor name="r_drive" joint="r_wheel_inner" gear="6" ctrlrange="-1 1"/>
+    <motor name="r_drive2" joint="r_wheel_outer" gear="6" ctrlrange="-1 1"/>
     <position name="l_hip" joint="l_hip_pitch" kp="80" ctrlrange="-1.4 1.0"/>
     <position name="r_hip" joint="r_hip_pitch" kp="80" ctrlrange="-1.4 1.0"/>
     <position name="l_knee" joint="l_knee" kp="100" ctrlrange="0 2.2"/>
