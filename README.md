@@ -37,7 +37,7 @@ Consistent **Quanta Computer** native design: matte **black dual-camera head**, 
 
 </details>
 
-### Cartoon modes (wheel ↔ biped)
+### Cartoon modes
 
 <table>
 <tr>
