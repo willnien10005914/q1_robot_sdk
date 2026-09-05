@@ -10,6 +10,8 @@ Q1 ships in two software/hardware unlock tiers. **Education** means the **develo
 | RL | Playback of factory policies | **PPO** (and related) Train → Play → Sim2Sim → Sim2Real |
 | VLA | Optional cloud demos if offered | On-device / on-host **Vision–Language–Action** fine-tune & deploy |
 | Secondary development | App-level scripting of named packs | Full SDK: DDS, ROS 2, RL gym, VLA adapters |
+| Simulation training | Playback / limited demos | **MuJoCo** · **Isaac Sim** · **Isaac Lab** |
+| Onboard SoC | OEM compute (locked skill runtime) | **2026:** Jetson AGX Orin EVK · **2027:** Qualcomm IQ9 low-cost EVK |
 
 ## Why Education exists
 
