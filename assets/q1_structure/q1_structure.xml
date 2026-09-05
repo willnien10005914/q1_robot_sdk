@@ -1,0 +1,135 @@
+<mujoco model="q1_structure_wheeled">
+  <!-- Built from Drive CAD structure ref (dual-wheel foot humanoid). -->
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast"/>
+
+  <default>
+    <joint damping="0.8" armature="0.02"/>
+    <geom friction="1.8 0.15 0.008" condim="3" solref="0.02 1"/>
+    <motor ctrllimited="true" ctrlrange="-1 1"/>
+  </default>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker"
+             rgb1="0.2 0.25 0.3" rgb2="0.12 0.15 0.18" width="512" height="512"/>
+    <material name="grid" texture="grid" texrepeat="8 8" reflectance="0.05"/>
+    <material name="frame" rgba="0.75 0.76 0.78 1"/>
+    <material name="torso_mid" rgba="0.25 0.55 0.35 1"/>
+    <material name="pelvis" rgba="0.85 0.75 0.25 1"/>
+    <material name="hip" rgba="0.55 0.45 0.70 1"/>
+    <material name="actuator" rgba="0.25 0.25 0.28 1"/>
+    <material name="wheel" rgba="0.12 0.12 0.14 1"/>
+    <material name="head" rgba="0.08 0.08 0.10 1"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 4" dir="0 0 -1"/>
+    <geom name="floor" type="plane" size="25 25 0.05" material="grid"/>
+
+    <body name="base" pos="0 0 0.72">
+      <freejoint name="root"/>
+      <inertial pos="0 0 0.05" mass="6" diaginertia="0.05 0.06 0.04"/>
+      <geom type="box" size="0.11 0.09 0.08" pos="0 0 0.08" material="pelvis"/>
+      <site name="imu" pos="0 0 0.08" size="0.01"/>
+
+      <body name="torso_mid" pos="0 0 0.16">
+        <joint name="waist_yaw" type="hinge" axis="0 0 1" range="-0.6 0.6"/>
+        <inertial pos="0 0 0.07" mass="3" diaginertia="0.02 0.02 0.015"/>
+        <geom type="cylinder" size="0.09 0.07" pos="0 0 0.07" material="torso_mid"/>
+
+        <body name="torso_upper" pos="0 0 0.14">
+          <joint name="waist_pitch" type="hinge" axis="0 1 0" range="-0.4 0.4"/>
+          <inertial pos="0 0 0.12" mass="5" diaginertia="0.04 0.05 0.03"/>
+          <geom type="box" size="0.12 0.09 0.12" pos="0 0 0.12" material="frame"/>
+          <geom type="box" size="0.07 0.06 0.06" pos="0 0 0.30" material="head"/>
+
+          <body name="l_arm" pos="0 0.14 0.18">
+            <joint name="l_shoulder_pitch" type="hinge" axis="0 1 0" range="-2 1.5"/>
+            <inertial pos="0 0 -0.10" mass="1.2" diaginertia="0.01 0.01 0.002"/>
+            <geom type="cylinder" size="0.05 0.03" quat="0.707 0.707 0 0" material="actuator"/>
+            <geom type="capsule" fromto="0 0.02 0 0 0.02 -0.24" size="0.03" material="frame"/>
+            <body name="l_fore" pos="0 0.02 -0.24">
+              <joint name="l_elbow" type="hinge" axis="0 1 0" range="-2.2 0"/>
+              <inertial pos="0 0 -0.10" mass="0.8" diaginertia="0.006 0.006 0.001"/>
+              <geom type="capsule" fromto="0 0 0 0 0 -0.20" size="0.025" material="frame"/>
+            </body>
+          </body>
+
+          <body name="r_arm" pos="0 -0.14 0.18">
+            <joint name="r_shoulder_pitch" type="hinge" axis="0 1 0" range="-2 1.5"/>
+            <inertial pos="0 0 -0.10" mass="1.2" diaginertia="0.01 0.01 0.002"/>
+            <geom type="cylinder" size="0.05 0.03" quat="0.707 0.707 0 0" material="actuator"/>
+            <geom type="capsule" fromto="0 -0.02 0 0 -0.02 -0.24" size="0.03" material="frame"/>
+            <body name="r_fore" pos="0 -0.02 -0.24">
+              <joint name="r_elbow" type="hinge" axis="0 1 0" range="-2.2 0"/>
+              <inertial pos="0 0 -0.10" mass="0.8" diaginertia="0.006 0.006 0.001"/>
+              <geom type="capsule" fromto="0 0 0 0 0 -0.20" size="0.025" material="frame"/>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <!-- LEFT LEG + dual wheels -->
+      <body name="l_thigh" pos="0 0.10 -0.02">
+        <joint name="l_hip_pitch" type="hinge" axis="0 1 0" range="-1.4 1.0"/>
+        <inertial pos="0 0 -0.14" mass="3" diaginertia="0.03 0.03 0.01"/>
+        <geom type="box" size="0.04 0.035 0.14" pos="0 0 -0.14" material="hip"/>
+        <body name="l_shank" pos="0 0 -0.28">
+          <joint name="l_knee" type="hinge" axis="0 1 0" range="0 2.2"/>
+          <inertial pos="0 0 -0.16" mass="2.2" diaginertia="0.025 0.025 0.008"/>
+          <geom type="box" size="0.035 0.03 0.16" pos="0 0 -0.16" material="frame"/>
+          <body name="l_wheel_inner" pos="0 0.045 -0.34">
+            <joint name="l_wheel_inner" type="hinge" axis="0 1 0" damping="0.05"/>
+            <inertial pos="0 0 0" mass="0.6" diaginertia="0.002 0.003 0.002"/>
+            <geom type="cylinder" size="0.09 0.025" material="wheel" friction="1.8 0.1 0.005"/>
+          </body>
+          <body name="l_wheel_outer" pos="0 -0.045 -0.34">
+            <joint name="l_wheel_outer" type="hinge" axis="0 1 0" damping="0.05"/>
+            <inertial pos="0 0 0" mass="0.6" diaginertia="0.002 0.003 0.002"/>
+            <geom type="cylinder" size="0.09 0.025" material="wheel" friction="1.8 0.1 0.005"/>
+          </body>
+        </body>
+      </body>
+
+      <!-- RIGHT LEG + dual wheels -->
+      <body name="r_thigh" pos="0 -0.10 -0.02">
+        <joint name="r_hip_pitch" type="hinge" axis="0 1 0" range="-1.4 1.0"/>
+        <inertial pos="0 0 -0.14" mass="3" diaginertia="0.03 0.03 0.01"/>
+        <geom type="box" size="0.04 0.035 0.14" pos="0 0 -0.14" material="hip"/>
+        <body name="r_shank" pos="0 0 -0.28">
+          <joint name="r_knee" type="hinge" axis="0 1 0" range="0 2.2"/>
+          <inertial pos="0 0 -0.16" mass="2.2" diaginertia="0.025 0.025 0.008"/>
+          <geom type="box" size="0.035 0.03 0.16" pos="0 0 -0.16" material="frame"/>
+          <body name="r_wheel_inner" pos="0 -0.045 -0.34">
+            <joint name="r_wheel_inner" type="hinge" axis="0 1 0" damping="0.05"/>
+            <inertial pos="0 0 0" mass="0.6" diaginertia="0.002 0.003 0.002"/>
+            <geom type="cylinder" size="0.09 0.025" material="wheel" friction="1.8 0.1 0.005"/>
+          </body>
+          <body name="r_wheel_outer" pos="0 0.045 -0.34">
+            <joint name="r_wheel_outer" type="hinge" axis="0 1 0" damping="0.05"/>
+            <inertial pos="0 0 0" mass="0.6" diaginertia="0.002 0.003 0.002"/>
+            <geom type="cylinder" size="0.09 0.025" material="wheel" friction="1.8 0.1 0.005"/>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <motor name="l_drive" joint="l_wheel_inner" gear="8" ctrlrange="-1 1"/>
+    <motor name="l_drive2" joint="l_wheel_outer" gear="8" ctrlrange="-1 1"/>
+    <motor name="r_drive" joint="r_wheel_inner" gear="8" ctrlrange="-1 1"/>
+    <motor name="r_drive2" joint="r_wheel_outer" gear="8" ctrlrange="-1 1"/>
+    <position name="l_hip" joint="l_hip_pitch" kp="80" ctrlrange="-1.4 1.0"/>
+    <position name="r_hip" joint="r_hip_pitch" kp="80" ctrlrange="-1.4 1.0"/>
+    <position name="l_knee" joint="l_knee" kp="100" ctrlrange="0 2.2"/>
+    <position name="r_knee" joint="r_knee" kp="100" ctrlrange="0 2.2"/>
+    <position name="waist_yaw_act" joint="waist_yaw" kp="40" ctrlrange="-0.6 0.6"/>
+    <position name="waist_pitch_act" joint="waist_pitch" kp="40" ctrlrange="-0.4 0.4"/>
+  </actuator>
+
+  <sensor>
+    <framepos name="base_pos" objtype="body" objname="base"/>
+    <framelinvel name="base_linvel" objtype="body" objname="base"/>
+  </sensor>
+</mujoco>

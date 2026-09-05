@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<!-- Q1 structure from Drive CAD ref: wheeled dual-foot humanoid -->
+<robot name="q1_structure">
+  <material name="frame"><color rgba="0.75 0.76 0.78 1"/></material>
+  <material name="torso_mid"><color rgba="0.25 0.55 0.35 1"/></material>
+  <material name="pelvis"><color rgba="0.85 0.75 0.25 1"/></material>
+  <material name="hip"><color rgba="0.55 0.45 0.70 1"/></material>
+  <material name="actuator"><color rgba="0.25 0.25 0.28 1"/></material>
+  <material name="wheel"><color rgba="0.12 0.12 0.14 1"/></material>
+  <material name="head_blk"><color rgba="0.08 0.08 0.10 1"/></material>
+
+  <link name="base_link">
+    <visual><origin xyz="0 0 0.08"/><geometry><box size="0.22 0.18 0.16"/></geometry><material name="pelvis"/></visual>
+    <collision><origin xyz="0 0 0.08"/><geometry><box size="0.22 0.18 0.16"/></geometry></collision>
+    <inertial><mass value="6.0"/><inertia ixx="0.05" ixy="0" ixz="0" iyy="0.06" iyz="0" izz="0.04"/></inertial>
+  </link>
+
+  <link name="torso_mid">
+    <visual><origin xyz="0 0 0.08"/><geometry><cylinder length="0.14" radius="0.09"/></geometry><material name="torso_mid"/></visual>
+    <collision><origin xyz="0 0 0.08"/><geometry><cylinder length="0.14" radius="0.09"/></geometry></collision>
+    <inertial><mass value="3.0"/><inertia ixx="0.02" ixy="0" ixz="0" iyy="0.02" iyz="0" izz="0.015"/></inertial>
+  </link>
+  <joint name="waist_yaw" type="revolute">
+    <parent link="base_link"/><child link="torso_mid"/>
+    <origin xyz="0 0 0.16"/><axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.6" effort="40" velocity="3"/>
+  </joint>
+
+  <link name="torso_upper">
+    <visual><origin xyz="0 0 0.12"/><geometry><box size="0.24 0.18 0.24"/></geometry><material name="frame"/></visual>
+    <collision><origin xyz="0 0 0.12"/><geometry><box size="0.24 0.18 0.24"/></geometry></collision>
+    <inertial><mass value="5.0"/><inertia ixx="0.04" ixy="0" ixz="0" iyy="0.05" iyz="0" izz="0.03"/></inertial>
+  </link>
+  <joint name="waist_pitch" type="revolute">
+    <parent link="torso_mid"/><child link="torso_upper"/>
+    <origin xyz="0 0 0.14"/><axis xyz="0 1 0"/>
+    <limit lower="-0.4" upper="0.4" effort="50" velocity="3"/>
+  </joint>
+
+  <link name="head">
+    <visual><geometry><box size="0.14 0.12 0.12"/></geometry><material name="head_blk"/></visual>
+    <inertial><mass value="1.0"/><inertia ixx="0.005" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.005"/></inertial>
+  </link>
+  <joint name="neck" type="fixed">
+    <parent link="torso_upper"/><child link="head"/><origin xyz="0 0 0.30"/>
+  </joint>
+
+  <!-- LEFT ARM -->
+  <link name="l_shoulder"><visual><geometry><cylinder length="0.06" radius="0.05"/></geometry><material name="actuator"/></visual>
+    <inertial><mass value="0.8"/><inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/></inertial></link>
+  <joint name="l_shoulder_pitch" type="revolute">
+    <parent link="torso_upper"/><child link="l_shoulder"/>
+    <origin xyz="0 0.14 0.18" rpy="1.5708 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-2.0" upper="1.5" effort="30" velocity="4"/>
+  </joint>
+  <link name="l_upper_arm"><visual><origin xyz="0 0 -0.12"/><geometry><cylinder length="0.22" radius="0.03"/></geometry><material name="frame"/></visual>
+    <inertial><mass value="1.2"/><origin xyz="0 0 -0.12"/><inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.002"/></inertial></link>
+  <joint name="l_shoulder_roll" type="revolute">
+    <parent link="l_shoulder"/><child link="l_upper_arm"/>
+    <origin xyz="0 0 0"/><axis xyz="1 0 0"/>
+    <limit lower="-1.2" upper="1.2" effort="25" velocity="4"/>
+  </joint>
+  <link name="l_forearm"><visual><origin xyz="0 0 -0.11"/><geometry><cylinder length="0.20" radius="0.025"/></geometry><material name="frame"/></visual>
+    <inertial><mass value="0.8"/><origin xyz="0 0 -0.11"/><inertia ixx="0.006" ixy="0" ixz="0" iyy="0.006" iyz="0" izz="0.001"/></inertial></link>
+  <joint name="l_elbow" type="revolute">
+    <parent link="l_upper_arm"/><child link="l_forearm"/>
+    <origin xyz="0 0 -0.24"/><axis xyz="0 1 0"/>
+    <limit lower="-2.2" upper="0" effort="20" velocity="4"/>
+  </joint>
+
+  <!-- RIGHT ARM (mirror) -->
+  <link name="r_shoulder"><visual><geometry><cylinder length="0.06" radius="0.05"/></geometry><material name="actuator"/></visual>
+    <inertial><mass value="0.8"/><inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/></inertial></link>
+  <joint name="r_shoulder_pitch" type="revolute">
+    <parent link="torso_upper"/><child link="r_shoulder"/>
+    <origin xyz="0 -0.14 0.18" rpy="-1.5708 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-2.0" upper="1.5" effort="30" velocity="4"/>
+  </joint>
+  <link name="r_upper_arm"><visual><origin xyz="0 0 -0.12"/><geometry><cylinder length="0.22" radius="0.03"/></geometry><material name="frame"/></visual>
+    <inertial><mass value="1.2"/><origin xyz="0 0 -0.12"/><inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.002"/></inertial></link>
+  <joint name="r_shoulder_roll" type="revolute">
+    <parent link="r_shoulder"/><child link="r_upper_arm"/>
+    <origin xyz="0 0 0"/><axis xyz="1 0 0"/>
+    <limit lower="-1.2" upper="1.2" effort="25" velocity="4"/>
+  </joint>
+  <link name="r_forearm"><visual><origin xyz="0 0 -0.11"/><geometry><cylinder length="0.20" radius="0.025"/></geometry><material name="frame"/></visual>
+    <inertial><mass value="0.8"/><origin xyz="0 0 -0.11"/><inertia ixx="0.006" ixy="0" ixz="0" iyy="0.006" iyz="0" izz="0.001"/></inertial></link>
+  <joint name="r_elbow" type="revolute">
+    <parent link="r_upper_arm"/><child link="r_forearm"/>
+    <origin xyz="0 0 -0.24"/><axis xyz="0 1 0"/>
+    <limit lower="-2.2" upper="0" effort="20" velocity="4"/>
+  </joint>
+
+  <!-- LEFT LEG + dual wheels -->
+  <link name="l_hip"><visual><geometry><cylinder length="0.08" radius="0.06"/></geometry><material name="hip"/></visual>
+    <inertial><mass value="1.5"/><inertia ixx="0.004" ixy="0" ixz="0" iyy="0.004" iyz="0" izz="0.004"/></inertial></link>
+  <joint name="l_hip_yaw" type="revolute">
+    <parent link="base_link"/><child link="l_hip"/>
+    <origin xyz="0 0.10 -0.02" rpy="1.5708 0 0"/><axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.6" effort="60" velocity="5"/>
+  </joint>
+  <link name="l_thigh"><visual><origin xyz="0 0 -0.14"/><geometry><box size="0.08 0.07 0.28"/></geometry><material name="hip"/></visual>
+    <collision><origin xyz="0 0 -0.14"/><geometry><box size="0.08 0.07 0.28"/></geometry></collision>
+    <inertial><mass value="3.0"/><origin xyz="0 0 -0.14"/><inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.01"/></inertial></link>
+  <joint name="l_hip_pitch" type="revolute">
+    <parent link="l_hip"/><child link="l_thigh"/>
+    <origin xyz="0 0 0" rpy="-1.5708 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-1.4" upper="1.0" effort="80" velocity="6"/>
+  </joint>
+  <link name="l_shank"><visual><origin xyz="0 0 -0.16"/><geometry><box size="0.07 0.06 0.32"/></geometry><material name="frame"/></visual>
+    <collision><origin xyz="0 0 -0.16"/><geometry><box size="0.07 0.06 0.32"/></geometry></collision>
+    <inertial><mass value="2.2"/><origin xyz="0 0 -0.16"/><inertia ixx="0.025" ixy="0" ixz="0" iyy="0.025" iyz="0" izz="0.008"/></inertial></link>
+  <joint name="l_knee" type="revolute">
+    <parent link="l_thigh"/><child link="l_shank"/>
+    <origin xyz="0 0 -0.28"/><axis xyz="0 1 0"/>
+    <limit lower="0" upper="2.2" effort="100" velocity="6"/>
+  </joint>
+  <link name="l_wheel_inner"><visual><geometry><cylinder length="0.05" radius="0.09"/></geometry><material name="wheel"/></visual>
+    <collision><geometry><cylinder length="0.05" radius="0.09"/></geometry></collision>
+    <inertial><mass value="0.6"/><inertia ixx="0.002" ixy="0" ixz="0" iyy="0.003" iyz="0" izz="0.002"/></inertial></link>
+  <joint name="l_wheel_inner" type="continuous">
+    <parent link="l_shank"/><child link="l_wheel_inner"/>
+    <origin xyz="0 0.04 -0.34" rpy="1.5708 0 0"/><axis xyz="0 0 1"/>
+  </joint>
+  <link name="l_wheel_outer"><visual><geometry><cylinder length="0.05" radius="0.09"/></geometry><material name="wheel"/></visual>
+    <collision><geometry><cylinder length="0.05" radius="0.09"/></geometry></collision>
+    <inertial><mass value="0.6"/><inertia ixx="0.002" ixy="0" ixz="0" iyy="0.003" iyz="0" izz="0.002"/></inertial></link>
+  <joint name="l_wheel_outer" type="continuous">
+    <parent link="l_shank"/><child link="l_wheel_outer"/>
+    <origin xyz="0 -0.04 -0.34" rpy="1.5708 0 0"/><axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- RIGHT LEG + dual wheels -->
+  <link name="r_hip"><visual><geometry><cylinder length="0.08" radius="0.06"/></geometry><material name="hip"/></visual>
+    <inertial><mass value="1.5"/><inertia ixx="0.004" ixy="0" ixz="0" iyy="0.004" iyz="0" izz="0.004"/></inertial></link>
+  <joint name="r_hip_yaw" type="revolute">
+    <parent link="base_link"/><child link="r_hip"/>
+    <origin xyz="0 -0.10 -0.02" rpy="-1.5708 0 0"/><axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.6" effort="60" velocity="5"/>
+  </joint>
+  <link name="r_thigh"><visual><origin xyz="0 0 -0.14"/><geometry><box size="0.08 0.07 0.28"/></geometry><material name="hip"/></visual>
+    <collision><origin xyz="0 0 -0.14"/><geometry><box size="0.08 0.07 0.28"/></geometry></collision>
+    <inertial><mass value="3.0"/><origin xyz="0 0 -0.14"/><inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.01"/></inertial></link>
+  <joint name="r_hip_pitch" type="revolute">
+    <parent link="r_hip"/><child link="r_thigh"/>
+    <origin xyz="0 0 0" rpy="1.5708 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-1.4" upper="1.0" effort="80" velocity="6"/>
+  </joint>
+  <link name="r_shank"><visual><origin xyz="0 0 -0.16"/><geometry><box size="0.07 0.06 0.32"/></geometry><material name="frame"/></visual>
+    <collision><origin xyz="0 0 -0.16"/><geometry><box size="0.07 0.06 0.32"/></geometry></collision>
+    <inertial><mass value="2.2"/><origin xyz="0 0 -0.16"/><inertia ixx="0.025" ixy="0" ixz="0" iyy="0.025" iyz="0" izz="0.008"/></inertial></link>
+  <joint name="r_knee" type="revolute">
+    <parent link="r_thigh"/><child link="r_shank"/>
+    <origin xyz="0 0 -0.28"/><axis xyz="0 1 0"/>
+    <limit lower="0" upper="2.2" effort="100" velocity="6"/>
+  </joint>
+  <link name="r_wheel_inner"><visual><geometry><cylinder length="0.05" radius="0.09"/></geometry><material name="wheel"/></visual>
+    <collision><geometry><cylinder length="0.05" radius="0.09"/></geometry></collision>
+    <inertial><mass value="0.6"/><inertia ixx="0.002" ixy="0" ixz="0" iyy="0.003" iyz="0" izz="0.002"/></inertial></link>
+  <joint name="r_wheel_inner" type="continuous">
+    <parent link="r_shank"/><child link="r_wheel_inner"/>
+    <origin xyz="0 -0.04 -0.34" rpy="1.5708 0 0"/><axis xyz="0 0 1"/>
+  </joint>
+  <link name="r_wheel_outer"><visual><geometry><cylinder length="0.05" radius="0.09"/></geometry><material name="wheel"/></visual>
+    <collision><geometry><cylinder length="0.05" radius="0.09"/></geometry></collision>
+    <inertial><mass value="0.6"/><inertia ixx="0.002" ixy="0" ixz="0" iyy="0.003" iyz="0" izz="0.002"/></inertial></link>
+  <joint name="r_wheel_outer" type="continuous">
+    <parent link="r_shank"/><child link="r_wheel_outer"/>
+    <origin xyz="0 0.04 -0.34" rpy="1.5708 0 0"/><axis xyz="0 0 1"/>
+  </joint>
+</robot>
