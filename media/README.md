@@ -1,18 +1,24 @@
 # Media
 
-Concept preview assets for the dual-wheel **Q1** (G1-Edu-style developer teaser).
+## Edu wheel-foot concept demo (current)
 
-| File | Use |
-|------|-----|
-| `q1_wheeled_concept_demo.gif` | README autoplay preview |
-| `q1_wheeled_concept_demo.mp4` | Full HTML5 / download playback |
-| `q1_wheeled_concept_poster.png` | Video poster frame |
+Inspired by wheel-foot humanoids like [X2-N](https://www.tech360.tv/china-unveils-x2-n-humanoid-robot-wheels-feet-mobility).
 
-Regenerate:
+| File | Role |
+|------|------|
+| `q1_edu_wheel_demo.gif` | README autoplay preview |
+| `q1_edu_wheel_demo.mp4` | Full ~30s concept video |
+| `q1_edu_wheel_demo_poster.png` | Poster frame |
 
-```bash
-python3 scripts/generate_concept_demo.py
-ffmpeg -y -framerate 24 -i media/demo_frames/frame_%04d.png \
-  -c:v libx264 -pix_fmt yuv420p -crf 23 -movflags +faststart \
-  media/q1_wheeled_concept_demo.mp4
-```
+### Storyboard
+1. Hero — Q1 Edu wheel-foot humanoid  
+2. Wheel-foot mobility  
+3. Education classroom  
+4. Customer fine-tuning  
+5. Home clean & organize  
+6. Logistics & cargo  
+7. Performance sports (soft ball)  
+8. Calligraphy  
+9. Piano  
+
+Legacy filenames `q1_wheeled_concept_demo.*` are kept as copies for old links.

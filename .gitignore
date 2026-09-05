@@ -14,3 +14,6 @@ logs/
 .DS_Store
 *.pt
 *.onnx
+media/clips/
+media/labeled/
+media/scenes/
