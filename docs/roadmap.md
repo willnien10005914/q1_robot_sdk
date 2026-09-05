@@ -6,9 +6,9 @@ Q1 ships as a **dual-wheel** companion first (CES 2027), then expands to **biped
 
 | Year | Platform | SDK goal | Public moment |
 |------|----------|----------|---------------|
-| **2026** | Dual-wheel Q1 | Pre-SDK: API architecture + interactive use cases | GitHub pre-releases from **October 2026** |
-| **2027 H1** | Dual-wheel Q1 Education | Official SDK 1.0 — deploy to physical Education units | **CES 2027** showcase |
-| **2027+** | Biped Q1 + dexterous hand | Manipulation SDK track | Manipulation demos / Education expand |
+| **2026** | Dual-wheel Q1 · **AGX Orin EVK** | Pre-SDK + Isaac Sim/Lab · MuJoCo train path | GitHub pre-releases from **October 2026** |
+| **2027 H1** | Dual-wheel Q1 Education (Orin) | Official SDK 1.0 — physical Education deploy | **CES 2027** showcase |
+| **2027+** | Biped + hand · **IQ9 low-cost** track | Manipulation SDK + lower-cost Education SoC | IQ9 SKU + manipulation demos |
 
 ## GitHub milestones
 

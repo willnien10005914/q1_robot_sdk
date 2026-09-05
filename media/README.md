@@ -5,9 +5,17 @@
 | File | Role |
 |------|------|
 | `q1_edu_wheel_demo.gif` | README autoplay |
-| `q1_edu_wheel_demo.mp4` | Full concept video |
+| `q1_edu_wheel_demo.mp4` | Full concept video (optional asset; not linked from README) |
 | `q1_edu_wheel_demo_poster.png` | Poster frame |
 | `playground/q1_mujoco_keyboard_demo.mp4` | Headless MuJoCo keyboard-scripted demo |
+
+## Hardware (Education SoC EVKs)
+
+| File | Role |
+|------|------|
+| `hardware/nvidia_jetson_agx_orin_evk.jpg` | **2026** Education onboard — Jetson AGX Orin Developer Kit |
+| `hardware/qualcomm_iq9075_evk.jpg` | **2027** plan — Qualcomm IQ-9075 (IQ9) EVK exterior |
+| `hardware/qualcomm_iq9075_evk_top.jpg` | IQ-9075 EVK top-board reference |
 
 ## Design notes
 

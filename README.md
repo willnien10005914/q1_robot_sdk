@@ -32,23 +32,6 @@ Consistent **Quanta Computer** native design: matte **black dual-camera head**, 
   <img src="media/q1_edu_wheel_demo.gif" alt="Q1 Education wheel-foot humanoid concept demo" width="960" />
 </p>
 
-<p align="center">
-  <a href="https://github.com/willnien10005914/q1_robot_sdk/releases/download/v0.1.0-pre/q1_edu_wheel_demo.mp4"><strong>▶ Play / download full MP4 (~30s)</strong></a>
-  ·
-  <a href="media/q1_edu_wheel_demo.mp4">MP4 in repo</a>
-  ·
-  <a href="docs/develop_guide/10_use_cases.md">Use-case guide</a>
-</p>
-
-<details>
-<summary>HTML5 video player (click to expand)</summary>
-
-<video src="media/q1_edu_wheel_demo.mp4" controls muted loop playsinline width="960" poster="media/q1_edu_wheel_demo_poster.png">
-  <a href="media/q1_edu_wheel_demo.mp4">Download the Q1 Education concept demo (MP4)</a>
-</video>
-
-</details>
-
 ### Cartoon modes
 
 <table>
@@ -86,9 +69,59 @@ Consistent **Quanta Computer** native design: matte **black dual-camera head**, 
 | **Basic motion** | Wheel-foot loco + **QDD** joint control, soft-stop, arm trajectories |
 | **Dexterous hand** | 3-finger end-effector API (grasp / brush / key press) |
 | **Manufacture** | **Quanta Computer** · MIT Taiwan native design |
-| **RL / AI** | `q1_rl_gym` — PPO Train → Play → Sim2Sim → Sim2Real |
+| **RL / AI** | `q1_rl_gym` — PPO · **Isaac Sim** · **Isaac Lab** · MuJoCo playground |
 | **VLA** | Vision–Language–Action adapters (obs → language goal → action) |
+| **Onboard SoC** | **2026:** Jetson AGX Orin EVK · **2027:** Qualcomm IQ9 low-cost EVK track |
 | **Use cases** | Education-edition train → deploy custom packs |
+
+---
+
+## Simulation & training stacks
+
+Education SDK training is not limited to MuJoCo. We also support:
+
+| Stack | Role |
+|-------|------|
+| **MuJoCo playground** | Fast keyboard bring-up + Colab PPO experiments |
+| **NVIDIA Isaac Sim** | High-fidelity sim, sensors, domain randomization |
+| **NVIDIA Isaac Lab** | RL / imitation training workflows (PPO and related) on Isaac |
+| **VLA fine-tune** | Vision–language–action policies → deploy on Education hardware |
+
+Typical path: train in Isaac Lab / MuJoCo → Sim2Sim → Sim2Real on the onboard SoC below.
+
+---
+
+## Onboard AI compute (Education SoC roadmap)
+
+Education units ship with an edge AI SoC for onboard PPO / VLA inference and fine-tune assist. **2026** Education uses **NVIDIA Jetson AGX Orin**; a **lower-cost Qualcomm IQ9** track is planned for **2027**.
+
+<table>
+<tr>
+<td width="50%" align="center">
+  <img src="media/hardware/nvidia_jetson_agx_orin_evk.jpg" alt="NVIDIA Jetson AGX Orin Developer Kit" width="100%">
+</td>
+<td width="50%" align="center">
+  <img src="media/hardware/qualcomm_iq9075_evk.jpg" alt="Qualcomm Dragonwing IQ-9075 Evaluation Kit" width="100%">
+</td>
+</tr>
+<tr>
+<td align="center"><b>2026 — Jetson AGX Orin EVK</b><br>
+<a href="https://marketplace.nvidia.com/en-us/enterprise/robotics-edge/jetson-agx-orin-developer-kit/">Jetson AGX Orin Developer Kit</a></td>
+<td align="center"><b>2027 plan — Qualcomm IQ9 (IQ-9075 EVK)</b><br>
+<a href="https://www.qualcomm.com/developer/hardware/qualcomm-iq-9075-evaluation-kit-evk">Qualcomm IQ-9075 Evaluation Kit</a></td>
+</tr>
+</table>
+
+| | **AGX Orin EVK** (Education now / 2026) | **Qualcomm IQ9 / IQ-9075 EVK** (2027 plan) |
+|--|------------------------------------------|---------------------------------------------|
+| Role on Q1 | Current Education onboard AI compute | Lower-cost Education / volume track |
+| Vendor AI rating | Up to **275 TOPS** (sparse INT8, vendor spec) | Up to **100 dense TOPS** NPU (~**200** sparse-equivalent, vendor spec) |
+| AI engines | Ampere GPU + Tensor Cores + NVDLA / PVA | Hexagon NPU (+ GPU assist) |
+| Power class | ~15–60 W configurable | Industrial edge / lower BOM target |
+| Sim / train host | Isaac Sim · Isaac Lab · MuJoCo (PC/GPU) | Same host stacks; deploy runtime on IQ9 |
+| Status | **Shipping path for 2026 Education** | **Roadmap — low-cost SKU planned 2027** |
+
+> TOPS figures are **vendor-published** and use different sparsity conventions — use them as order-of-magnitude guidance, not a 1:1 benchmark.
 
 ---
 
@@ -145,10 +178,11 @@ Models:
 
 ```text
 2026-10  Pre-SDK releases begin (API skeleton + use-case demos)
-2026-Q4  Wheeled locomotion + interaction action packs (piano / calligraphy / soft baseball)
+2026-Q4  Wheeled loco + packs; Education onboard = Jetson AGX Orin EVK
+2026     Isaac Sim / Isaac Lab + MuJoCo training path documented
 2027-01  CES 2027 dual-wheel showcase
-2027     Official SDK 1.0 — deploy to physical Q1 Education
-2027+    Biped platform + dexterous hand + VLA skill track
+2027     Official SDK 1.0 — physical Q1 Education (Orin)
+2027+    Qualcomm IQ9 low-cost Education track · biped + hand + VLA
 ```
 
 ---
