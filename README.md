@@ -6,6 +6,38 @@
 > **Target:** Official SDK + physical deploy when EDU units ship.  
 > **CES goal:** Dual-wheel Q1 demo track for **CES 2027**.
 
+## Concept demo (wheeled Q1)
+
+G1-style Edu preview for the dual-wheel Q1 — locomotion, piano, calligraphy, and soft baseball (home / kids play). Autoplays below; full MP4 linked under the clip.
+
+<p align="center">
+  <img src="media/q1_wheeled_concept_demo.gif" alt="Q1 wheeled robot concept demo" width="960" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/willnien10005914/q1_robot_sdk/releases/download/v0.1.0-pre/q1_wheeled_concept_demo.mp4"><strong>▶ Play / download MP4</strong></a>
+  ·
+  <a href="media/q1_wheeled_concept_demo.mp4">MP4 in repo</a>
+  ·
+  <a href="docs/develop_guide/10_use_cases.md">Use-case guide</a>
+</p>
+
+<details>
+<summary>HTML5 video player (click to expand)</summary>
+
+<video src="media/q1_wheeled_concept_demo.mp4" controls muted loop playsinline width="960" poster="media/q1_wheeled_concept_poster.png">
+  <a href="media/q1_wheeled_concept_demo.mp4">Download the Q1 concept demo (MP4)</a>
+</video>
+
+</details>
+
+| Scene | SDK hook |
+|-------|----------|
+| 01 Locomotion | `LocoClient.SetVelocity` / differential drive |
+| 02 Piano | `InteractionClient.PlayAction("piano_*")` |
+| 03 Calligraphy | `PlayAction("calligraphy_stroke_*")` |
+| 04 Soft baseball | `PlayAction("soft_baseball_*")` kid-safe pack |
+
 | Layer | What you get |
 |-------|----------------|
 | **DDS** | Real-time `rt/*` topics for lowcmd / lowstate / wheel odom |
@@ -50,6 +82,7 @@ q1_robot_sdk/
 ├── rl/                  # RL gym + deploy (sim2sim / sim2real)
 ├── sim/                 # MuJoCo / Isaac assets
 ├── docs/develop_guide/  # Full developer curriculum
+├── media/               # Concept demo GIF / MP4 preview
 └── assets/              # URDF / meshes (placeholder)
 ```
 
