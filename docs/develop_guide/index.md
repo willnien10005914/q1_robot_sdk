@@ -1,6 +1,6 @@
 # Q1 SDK Develop Guide
 
-Welcome. This guide is the Edu curriculum for Q1 — the same topics G1 developers typically learn (DDS, ROS, API, motion, RL, Sim2Sim, Sim2Real), rewritten for a **dual-wheel** robot with interactive arms.
+Welcome. This guide is the Edu curriculum for Q1 — the same topics Edu-class developers typically learn (DDS, ROS, API, motion, RL, Sim2Sim, Sim2Real), rewritten for a **dual-wheel** robot with interactive arms.
 
 ## Learning path
 
@@ -43,4 +43,4 @@ Network + DDS  →  High-level API  →  Basic motion
 ## Related
 
 - [Roadmap & milestones](../roadmap.md)
-- Upstream study references: [G1 Developer Center](https://support.unitree.com/home/en/G1_developer), [unitree_sdk2](https://github.com/unitreerobotics/unitree_sdk2), [unitree_rl_gym](https://github.com/unitreerobotics/unitree_rl_gym)
+- Upstream study references: [Edu-class Developer Center](https://support.third-party.com/home/en/G1_developer), [third-party_sdk2](https://github.com/third-partyrobotics/third-party_sdk2), [third-party_rl_gym](https://github.com/third-partyrobotics/third-party_rl_gym)

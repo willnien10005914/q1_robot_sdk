@@ -31,7 +31,7 @@ python rl/deploy/sim2real/deploy_real.py eth0 q1_wheeled.yaml
 rl/deploy/sim2real/cpp_q1/
 ```
 
-LibTorch runtime example will land with Official SDK — same idea as Unitree’s `cpp_g1` deploy sample.
+LibTorch runtime example will land with Official SDK — same idea as third-party’s `cpp_q1` deploy sample.
 
 ## Next
 

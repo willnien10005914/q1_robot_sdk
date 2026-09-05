@@ -1,6 +1,7 @@
 # Q1 Robot SDK
 
-**Q1** is a dual-wheel home companion robot platform. This repository is the public SDK for developers — modeled after the Unitree G1 Edu developer experience (DDS + high-level client API + ROS 2 + RL Train→Play→Sim2Sim→Sim2Real), adapted for wheeled mobility and interactive upper-body actions.
+**Q1** is a transformable wheel-foot education humanoid platform designed and manufactured with **Quanta Computer (廣達電腦)** under Taiwan **MIT** (Made in Taiwan). This repository is the public SDK for developers — DDS realtime bus, high-level clients, ROS 2, and RL Train→Play→Sim2Sim→Sim2Real — purpose-built for Q1.
+
 
 > **Status:** Pre-SDK architecture (v0.x) — API surface, docs, examples, and CES 2027 wheeled roadmap.  
 > **Target:** Official SDK + physical deploy when EDU units ship.  
@@ -8,7 +9,8 @@
 
 ## Concept demo (Edu wheel-foot Q1)
 
-**White** wheel-foot Edu humanoid with **QDD series** actuators and a **3-finger dexterous hand** — distinct Taiwan MIT design (not a clone of [X2-N](https://www.tech360.tv/china-unveils-x2-n-humanoid-robot-wheels-feet-mobility)). Built with **Quanta Computer (廣達電腦)** Taiwan manufacturing collaboration in mind. Education-first: schools train once; customers fine-tune for home clean/organize, logistics, sports, calligraphy, and piano.
+Consistent **Quanta MIT native** design: matte **black dual-camera head**, soft fabric skinsuit, **QDD series** actuators, **3-finger dexterous hand**, and **wheel ↔ biped** transformable feet. Education-first: schools train once; customers fine-tune for home clean/organize, logistics, sports, calligraphy, and piano.
+
 
 <p align="center">
   <img src="media/q1_edu_wheel_demo.gif" alt="Q1 Edu wheel-foot humanoid concept demo" width="960" />
@@ -33,6 +35,7 @@
 
 | Scene | Skill path |
 |-------|------------|
+| Wheel ↔ Biped transform | Native wheel-foot reconfiguration |
 | Wheel-foot mobility | `LocoClient` + **QDD** joint torque / wheel roll |
 | Education lab | Classroom bring-up + teleop |
 | Customer fine-tune | RL / imitation train → deploy |
@@ -61,7 +64,6 @@
 - **[Roadmap & Milestones](docs/roadmap.md)** — wheeled (this year) → biped + dexterous hand (next year)
 - **[Architecture](docs/architecture.md)** — process layout, domains, safety
 - **[GitHub Milestones](https://github.com/willnien10005914/q1_robot_sdk/milestones)** — tracked release gates
-- Reference study: [Unitree G1 Developer](https://support.unitree.com/home/en/G1_developer) · [unitree_sdk2](https://github.com/unitreerobotics/unitree_sdk2)
 
 ---
 
@@ -171,7 +173,7 @@ ix.play_action("soft_baseball_toss")  # home kid-safe pack
 
 ## Develop Guide map (Edu path)
 
-Same learning arc many G1 Edu owners follow — mapped onto Q1:
+Q1 Edu learning path:
 
 | Chapter | Topic |
 |---------|-------|
@@ -192,7 +194,7 @@ Same learning arc many G1 Edu owners follow — mapped onto Q1:
 
 - Deadman / soft-estop on wireless + DDS heartbeat timeout (default 500 ms).
 - Kid-interaction packs clamp end-effector speed and contact force estimates.
-- Low-level `rt/lowcmd` requires explicit `SwitchToUserCtrl` lease (same pattern as G1 user-ctrl).
+- Low-level `rt/lowcmd` requires explicit `SwitchToUserCtrl` lease (requires an explicit user-control lease).
 
 ---
 
@@ -200,4 +202,3 @@ Same learning arc many G1 Edu owners follow — mapped onto Q1:
 
 Apache-2.0 — see [LICENSE](LICENSE).
 
-Q1 SDK design is inspired by public Unitree G1 / `unitree_sdk2` developer patterns; it is an independent SDK for the Q1 platform and is not affiliated with Unitree Robotics.

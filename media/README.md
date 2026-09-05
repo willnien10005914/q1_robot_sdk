@@ -1,6 +1,6 @@
 # Media
 
-## Current demo — white Q1 Edu (QDD + 3-finger)
+## Current concept demo
 
 | File | Role |
 |------|------|
@@ -8,7 +8,11 @@
 | `q1_edu_wheel_demo.mp4` | Full concept video |
 | `q1_edu_wheel_demo_poster.png` | Poster |
 
-**Hardware concept:** white body · QDD series motors · 3-finger dexterous hand · wheel-foot mobility  
-**Manufacture story:** Taiwan MIT · Quanta Computer (廣達電腦)
+**Native Quanta Computer · MIT Taiwan design**
+- Matte black dual-camera head
+- Soft fabric skinsuit
+- QDD series actuators
+- 3-finger dexterous hand
+- Transformable wheel-foot ↔ biped locomotion
 
-Legacy `q1_wheeled_concept_demo.*` aliases point to the same assets.
+Legacy `q1_wheeled_concept_demo.*` aliases mirror the same assets.

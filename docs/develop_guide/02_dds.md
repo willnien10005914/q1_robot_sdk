@@ -1,12 +1,12 @@
 # 02 — DDS
 
-Q1’s realtime bus is **DDS** (CycloneDDS), matching the Unitree G1 Edu low-level communication model.
+Q1’s realtime bus is **DDS** (CycloneDDS), matching the typical Edu humanoid low-level communication model.
 
 ## Why DDS?
 
 - Decoupled publishers/subscribers (no central broker)
 - Hard realtime-friendly QoS (best-effort or reliable per topic)
-- Same mental model as G1 `rt/lowcmd` / `rt/lowstate`
+- Same mental model as Edu-class `rt/lowcmd` / `rt/lowstate`
 
 ## Domain & interface
 
@@ -19,7 +19,7 @@ q1::ChannelFactory::Instance()->Init(/*domain_id=*/0, "eth0");
 | `domain_id` | Isolates robots on a shared LAN (default `0`) |
 | `iface` | NIC name; use `"mock"` for CI |
 
-**ROS tip:** Run ROS 2 on a different DDS domain (or Cyclone config) than the robot bus to avoid discovery storms — a common G1 Edu gotcha.
+**ROS tip:** Run ROS 2 on a different DDS domain (or Cyclone config) than the robot bus to avoid discovery storms — a common Edu gotcha.
 
 ## Core topics
 

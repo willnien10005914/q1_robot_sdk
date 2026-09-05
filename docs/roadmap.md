@@ -40,7 +40,7 @@ v1.0.0      Official EDU SDK (physical robot)
 ## Why wheeled first
 
 - Faster safe home interaction loop (piano / writing / soft toss) without full biped balance stack.
-- Clear EDU on-ramp: DDS → API → ROS → RL, matching G1 Edu learning expectations.
+- Clear EDU on-ramp: DDS → API → ROS → RL, matching Edu learning expectations.
 - CES 2027 focuses the story: companion mobility + expressive upper body.
 
 ## Next generation (biped + hand)
@@ -49,4 +49,4 @@ Documented early so EDU buyers know the multi-year path:
 
 1. Keep the **same DDS client pattern** (`LocoClient` / `ArmClient` / lease model).
 2. Add biped FSM modes (`Walk`, `Stand`, `Recover`) without breaking wheeled APIs (`SetVelocity` remains).
-3. Dexterous hand as a new `HandClient` service — parallel to G1 Dex3-style examples.
+3. Dexterous hand as a new `HandClient` service — parallel to Edu-class dexterous-hand-style examples.

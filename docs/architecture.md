@@ -1,8 +1,8 @@
 # Architecture
 
-## Design principles (G1-inspired, Q1-native)
+## Design principles (Edu-class-inspired, Q1-native)
 
-Q1 follows the same developer-facing split that Unitree G1 Edu users learn:
+Q1 follows the same developer-facing split that typical Edu humanoid users learn:
 
 1. **High-level service clients** — JSON request/response over DDS (`sport` / `arm` / `interaction` services).
 2. **Low-level realtime topics** — `rt/lowcmd`, `rt/lowstate` for joint/wheel setpoints when a lease is held.
@@ -35,7 +35,7 @@ Q1 follows the same developer-facing split that Unitree G1 Edu users learn:
 | **UserCtrl** | `SwitchToUserCtrl` (lease) | Publish `rt/lowcmd`, read `rt/lowstate` | Custom RL / teleop |
 | **Passive / Damp** | `Damp()` | Motors impedance hold | Safe idle |
 
-This mirrors G1’s Internal / UserCtrl / Low-level split, with wheeled kinematics instead of biped balance as the internal controller core for 2026–2027.
+This mirrors Q1's Internal / UserCtrl / Low-level split, with wheeled kinematics instead of biped balance as the internal controller core for 2026–2027.
 
 ## Topic map (DDS)
 

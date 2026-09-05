@@ -30,7 +30,7 @@ High-level apps should prefer `SetVelocity` and let the onboard controller handl
 
 ## Deadman rule
 
-For teleop and kid-facing packs: **both grips / hold-to-run** must be asserted or velocity is forced to zero. Same safety idea as G1 Edu “squeeze grips for IK”.
+For teleop and kid-facing packs: **both grips / hold-to-run** must be asserted or velocity is forced to zero. Same safety idea as Edu “squeeze grips for IK”.
 
 ## Next
 

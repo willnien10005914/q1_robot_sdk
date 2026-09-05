@@ -1,6 +1,6 @@
 # 04 — API
 
-High-level clients talk to onboard services with versioned API IDs (same client/server style as G1 `LocoClient`).
+High-level clients talk to onboard services with versioned API IDs (same client/server style as Edu-class `LocoClient`).
 
 ## Clients
 
