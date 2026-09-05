@@ -49,7 +49,7 @@ Form factor inspired by wheel-foot humanoids such as [X2-N](https://www.tech360.
 | **ROS 2** | `q1_msgs`, `q1_driver`, `q1_bringup`, teleop nodes |
 | **Basic motion** | Differential drive velocity, soft-stop, pose hold, arm joint trajectories |
 | **RL / AI** | `q1_rl_gym` — Train → Play → Sim2Sim → Sim2Real |
-| **Use cases** | Piano play, calligraphy, soft baseball play-with-kids |
+| **Use cases** | Edu train → home clean / logistics / sports / calligraphy / piano |
 
 ---
 
