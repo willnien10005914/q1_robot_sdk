@@ -1,5 +1,11 @@
 # Architecture
 
+## System architecture diagram
+
+Full compute & control stack (SoC → ROS 2 → real-time MCU → CAN FD / EtherCAT → joints):
+
+![Q1 compute & control architecture](../media/architecture/q1_compute_control_architecture.png)
+
 ## Design principles (Education edition)
 
 Q1 Education SDK exposes the same developer-facing split used for secondary development:
