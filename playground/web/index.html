@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Q1 MuJoCo-style Playground | Quanta Computer</title>
+  <style>
+    :root {
+      --bg: #0d141c;
+      --panel: #15202b;
+      --accent: #00a8c8;
+      --text: #e8eef3;
+      --muted: #8aa0b2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    header {
+      padding: 14px 22px; border-bottom: 1px solid #243241;
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    }
+    .logo {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: linear-gradient(135deg, #00a8c8, #006a90);
+      display: grid; place-items: center; font-weight: 800; color: white;
+    }
+    h1 { font-size: 1.05rem; margin: 0; font-weight: 650; }
+    .sub { color: var(--muted); font-size: 0.85rem; }
+    main { flex: 1; display: grid; grid-template-columns: 1fr 280px; gap: 0; }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+    #stage-wrap { position: relative; background: #0a1016; }
+    canvas { width: 100%; height: min(70vh, 640px); display: block; background:
+      radial-gradient(ellipse at center, #152230 0%, #0a1016 70%); }
+    aside {
+      background: var(--panel); padding: 18px; border-left: 1px solid #243241;
+      font-size: 0.9rem;
+    }
+    kbd {
+      background: #0d141c; border: 1px solid #334556; border-radius: 4px;
+      padding: 2px 7px; font-family: ui-monospace, monospace; font-size: 0.85rem;
+    }
+    .row { margin: 10px 0; color: var(--muted); line-height: 1.55; }
+    .status {
+      margin-top: 16px; padding: 12px; border-radius: 8px;
+      background: #0d141c; border: 1px solid #2a3a4a;
+    }
+    .status b { color: var(--accent); }
+    button {
+      margin: 4px 4px 4px 0; background: #1c2c3a; color: var(--text);
+      border: 1px solid #355064; border-radius: 6px; padding: 8px 12px; cursor: pointer;
+    }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    footer { padding: 10px 22px; color: var(--muted); font-size: 0.8rem; border-top: 1px solid #243241; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Q</div>
+    <div>
+      <h1>Q1 Wheel-Foot Playground</h1>
+      <div class="sub">Quanta Computer · MIT Taiwan · browser kinematic demo of the Q1 MJCF/URDF morphology</div>
+    </div>
+  </header>
+  <main>
+    <div id="stage-wrap">
+      <canvas id="c" width="960" height="540" tabindex="0"></canvas>
+    </div>
+    <aside>
+      <div class="row"><b>Keyboard</b></div>
+      <div class="row"><kbd>W</kbd> / <kbd>S</kbd> — forward / backward</div>
+      <div class="row"><kbd>A</kbd> / <kbd>D</kbd> — turn</div>
+      <div class="row"><kbd>T</kbd> — toggle wheel ↔ biped</div>
+      <div class="row"><kbd>1</kbd> wheel · <kbd>2</kbd> biped</div>
+      <div class="row"><kbd>R</kbd> reset · click canvas first</div>
+      <div>
+        <button id="btnWheel">Wheel</button>
+        <button id="btnBiped">Biped</button>
+        <button id="btnReset">Reset</button>
+      </div>
+      <div class="status">
+        Mode: <b id="mode">WHEEL</b><br/>
+        Speed: <b id="spd">0.00</b> m/s<br/>
+        Transform: <b id="tf">0%</b><br/>
+        Pose x: <b id="px">0.00</b> m
+      </div>
+      <div class="row" style="margin-top:18px">
+        Full physics: run locally<br/>
+        <code>python playground/mujoco_keyboard_demo.py</code><br/>
+        Model: <code>models/q1/q1_wheel_foot.xml</code>
+      </div>
+    </aside>
+  </main>
+  <footer>Native Quanta Computer Q1 Edu design · transformable wheel-foot humanoid · QDD · 3-finger hand · dual-camera head</footer>
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+    const state = {
+      mode: 'wheel', // wheel | biped
+      tf: 0,         // 0..1 transform blend
+      x: 0, y: 0, yaw: 0,
+      v: 0, w: 0,
+      wheelAngle: 0,
+      keys: {},
+    };
+
+    function setMode(m) {
+      state.mode = m;
+      document.getElementById('mode').textContent = m.toUpperCase();
+    }
+    document.getElementById('btnWheel').onclick = () => setMode('wheel');
+    document.getElementById('btnBiped').onclick = () => setMode('biped');
+    document.getElementById('btnReset').onclick = () => {
+      Object.assign(state, {x:0,y:0,yaw:0,v:0,w:0,tf:0,mode:'wheel',wheelAngle:0});
+      setMode('wheel');
+    };
+
+    window.addEventListener('keydown', e => {
+      state.keys[e.key.toLowerCase()] = true;
+      if (e.key === 't' || e.key === 'T') setMode(state.mode === 'wheel' ? 'biped' : 'wheel');
+      if (e.key === '1') setMode('wheel');
+      if (e.key === '2') setMode('biped');
+      if (e.key === 'r' || e.key === 'R') document.getElementById('btnReset').click();
+      e.preventDefault();
+    });
+    window.addEventListener('keyup', e => { state.keys[e.key.toLowerCase()] = false; });
+    canvas.addEventListener('click', () => canvas.focus());
+
+    function update(dt) {
+      const targetTf = state.mode === 'biped' ? 1 : 0;
+      state.tf += (targetTf - state.tf) * Math.min(1, dt * 3);
+
+      let drive = 0, turn = 0;
+      if (state.keys['w']) drive += 1;
+      if (state.keys['s']) drive -= 1;
+      if (state.keys['a']) turn -= 1;
+      if (state.keys['d']) turn += 1;
+
+      const maxV = state.mode === 'wheel' ? 1.6 : 0.35;
+      const maxW = state.mode === 'wheel' ? 1.4 : 0.6;
+      state.v = drive * maxV;
+      state.w = turn * maxW;
+      state.yaw += state.w * dt;
+      state.x += Math.cos(state.yaw) * state.v * dt;
+      state.y += Math.sin(state.yaw) * state.v * dt;
+      state.wheelAngle += state.v * dt / 0.095;
+
+      document.getElementById('spd').textContent = state.v.toFixed(2);
+      document.getElementById('tf').textContent = Math.round(state.tf * 100) + '%';
+      document.getElementById('px').textContent = state.x.toFixed(2);
+    }
+
+    function drawRobot(cx, cy, scale) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.scale(scale, scale);
+      ctx.rotate(-Math.PI / 2 + state.yaw); // face +x
+
+      // shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.35)';
+      ctx.beginPath(); ctx.ellipse(0, 18, 28, 10, 0, 0, Math.PI*2); ctx.fill();
+
+      const tf = state.tf;
+      // legs
+      const hipY = 8;
+      [-1, 1].forEach((side) => {
+        const hx = side * 10;
+        ctx.strokeStyle = '#c5cad0';
+        ctx.lineWidth = 7;
+        ctx.lineCap = 'round';
+        // thigh
+        ctx.beginPath(); ctx.moveTo(hx, hipY); ctx.lineTo(hx, hipY + 22); ctx.stroke();
+        // shank
+        ctx.beginPath(); ctx.moveTo(hx, hipY + 22); ctx.lineTo(hx, hipY + 44); ctx.stroke();
+        // wheel / foot
+        const wx = hx, wy = hipY + 52;
+        ctx.save();
+        ctx.translate(wx, wy);
+        // transform rotates wheel representation
+        ctx.rotate(tf * Math.PI / 2 * side * 0.15);
+        if (tf < 0.55) {
+          // wheel
+          ctx.rotate(state.wheelAngle * side);
+          ctx.fillStyle = '#1a1c20';
+          ctx.beginPath(); ctx.ellipse(0, 0, 11, 11, 0, 0, Math.PI*2); ctx.fill();
+          ctx.strokeStyle = '#00a8c8'; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(9,0); ctx.stroke();
+        } else {
+          // biped sole
+          ctx.fillStyle = '#22252b';
+          ctx.fillRect(-12, -3, 24, 8);
+        }
+        // morphing mid state: draw both faded
+        if (tf > 0.25 && tf < 0.75) {
+          ctx.globalAlpha = 0.45;
+          ctx.fillStyle = '#1a1c20';
+          ctx.beginPath(); ctx.ellipse(0, 0, 11, 11, 0, 0, Math.PI*2); ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+        ctx.restore();
+        // QDD joint dots
+        ctx.fillStyle = '#4a5058';
+        ctx.beginPath(); ctx.arc(hx, hipY + 22, 4, 0, Math.PI*2); ctx.fill();
+      });
+
+      // torso skinsuit
+      ctx.fillStyle = '#c8ccd1';
+      roundRect(ctx, -16, -28, 32, 40, 8); ctx.fill();
+      // arms + 3-finger hands
+      [-1, 1].forEach((side) => {
+        ctx.strokeStyle = '#c8ccd1'; ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(side * 16, -18);
+        ctx.lineTo(side * 28, 0);
+        ctx.lineTo(side * 30, 14);
+        ctx.stroke();
+        // fingers
+        ctx.strokeStyle = '#e8eaee'; ctx.lineWidth = 2;
+        for (let f = -1; f <= 1; f++) {
+          ctx.beginPath();
+          ctx.moveTo(side * 30, 14);
+          ctx.lineTo(side * 30 + f * 4, 22);
+          ctx.stroke();
+        }
+      });
+      // black dual-cam head
+      ctx.fillStyle = '#121417';
+      ctx.beginPath(); ctx.ellipse(0, -40, 14, 15, 0, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#2cf0ff';
+      ctx.beginPath(); ctx.arc(-5, -40, 3.2, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(5, -40, 3.2, 0, Math.PI*2); ctx.fill();
+
+      // Quanta Q badge
+      ctx.fillStyle = '#00a8c8';
+      ctx.beginPath(); ctx.arc(0, -10, 5, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#0d141c';
+      ctx.font = 'bold 7px sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('Q', 0, -9.5);
+
+      ctx.restore();
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+      ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+    }
+
+    let last = performance.now();
+    function frame(now) {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      update(dt);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ground grid
+      ctx.strokeStyle = '#1c2a38'; ctx.lineWidth = 1;
+      const ox = (canvas.width/2 - state.x * 40) % 40;
+      const oy = (canvas.height/2 - state.y * 40) % 40;
+      for (let x = ox; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,canvas.height); ctx.stroke();
+      }
+      for (let y = oy; y < canvas.height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke();
+      }
+      // HUD title
+      ctx.fillStyle = '#00a8c8';
+      ctx.font = '600 16px sans-serif';
+      ctx.fillText('Q1 · Quanta Computer · wheel ↔ biped', 24, 32);
+      ctx.fillStyle = '#8aa0b2';
+      ctx.font = '12px sans-serif';
+      ctx.fillText('Browser kinematic preview · full MuJoCo physics via Python playground', 24, 52);
+
+      drawRobot(canvas.width/2, canvas.height/2 + 20, 3.2);
+      requestAnimationFrame(frame);
+    }
+    setMode('wheel');
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>

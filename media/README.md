@@ -1,18 +1,21 @@
 # Media
 
-## Current concept demo
+## Concept demo
 
 | File | Role |
 |------|------|
 | `q1_edu_wheel_demo.gif` | README autoplay |
 | `q1_edu_wheel_demo.mp4` | Full concept video |
-| `q1_edu_wheel_demo_poster.png` | Poster |
+| `q1_edu_wheel_demo_poster.png` | Poster frame |
+| `playground/q1_mujoco_keyboard_demo.mp4` | Headless MuJoCo keyboard-scripted demo |
 
-**Native Quanta Computer · MIT Taiwan design**
-- Matte black dual-camera head
+## Design notes
+
+Quanta Computer native Q1 Edu humanoid:
+- Black dual-camera head
 - Soft fabric skinsuit
 - QDD series actuators
 - 3-finger dexterous hand
-- Transformable wheel-foot ↔ biped locomotion
+- Transformable wheel-foot ↔ biped
 
-Legacy `q1_wheeled_concept_demo.*` aliases mirror the same assets.
+Branding uses the Quanta **Q** mark only (no national flags).

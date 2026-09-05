@@ -1,15 +1,15 @@
 # Q1 Robot SDK
 
-**Q1** is a transformable wheel-foot education humanoid platform designed and manufactured with **Quanta Computer (廣達電腦)** under Taiwan **MIT** (Made in Taiwan). This repository is the public SDK for developers — DDS realtime bus, high-level clients, ROS 2, and RL Train→Play→Sim2Sim→Sim2Real — purpose-built for Q1.
+**Q1** is a transformable wheel-foot education humanoid designed and manufactured by **Quanta Computer** (MIT Taiwan). This repository is the public SDK: DDS realtime bus, high-level clients, ROS 2, and RL Train→Play→Sim2Sim→Sim2Real.
 
 
-> **Status:** Pre-SDK architecture (v0.x) — API surface, docs, examples, and CES 2027 wheeled roadmap.  
-> **Target:** Official SDK + physical deploy when EDU units ship.  
+> **Status:** Pre-SDK architecture (v0.x) — API surface, docs, examples, and CES 2027 wheeled roadmap.
+> **Target:** Official SDK + physical deploy when EDU units ship.
 > **CES goal:** Dual-wheel Q1 demo track for **CES 2027**.
 
 ## Concept demo (Edu wheel-foot Q1)
 
-Consistent **Quanta MIT native** design: matte **black dual-camera head**, soft fabric skinsuit, **QDD series** actuators, **3-finger dexterous hand**, and **wheel ↔ biped** transformable feet. Education-first: schools train once; customers fine-tune for home clean/organize, logistics, sports, calligraphy, and piano.
+Consistent **Quanta Computer** native design: matte **black dual-camera head**, soft fabric skinsuit, **QDD series** actuators, **3-finger dexterous hand**, and **wheel ↔ biped** transformable feet. Education-first: schools train once; customers fine-tune for home clean/organize, logistics, sports, calligraphy, and piano.
 
 
 <p align="center">
@@ -52,11 +52,49 @@ Consistent **Quanta MIT native** design: matte **black dual-camera head**, soft 
 | **ROS 2** | `q1_msgs`, `q1_driver`, `q1_bringup`, teleop nodes |
 | **Basic motion** | Wheel-foot loco + **QDD** joint control, soft-stop, arm trajectories |
 | **Dexterous hand** | 3-finger end-effector API (grasp / brush / key press) |
-| **Manufacture** | Taiwan **MIT** · Quanta Computer (廣達電腦) collaboration concept |
+| **Manufacture** | **Quanta Computer** · MIT Taiwan native design |
 | **RL / AI** | `q1_rl_gym` — Train → Play → Sim2Sim → Sim2Real |
 | **Use cases** | Edu train → home clean / logistics / sports / calligraphy / piano |
 
 ---
+
+
+## MuJoCo playground (keyboard)
+
+Interactive demo of the Q1 URDF/MJCF with **wheel ↔ biped transform** and drive.
+
+### Browser (GitHub Pages)
+
+Open [`playground/web/index.html`](playground/web/index.html) (or the GitHub Pages site) and click the canvas:
+
+| Key | Action |
+|-----|--------|
+| `W` / `S` | Forward / backward |
+| `A` / `D` | Turn |
+| `T` | Toggle wheel ↔ biped |
+| `1` / `2` | Wheel / biped |
+| `R` | Reset |
+
+### Local MuJoCo physics
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r playground/requirements.txt
+python playground/mujoco_keyboard_demo.py
+```
+
+Headless recording:
+
+```bash
+MUJOCO_GL=egl python playground/mujoco_keyboard_demo.py \
+  --headless-demo media/playground/q1_mujoco_keyboard_demo.mp4
+```
+
+Models:
+- MJCF: [`models/q1/q1_wheel_foot.xml`](models/q1/q1_wheel_foot.xml)
+- URDF: [`models/q1/q1_wheel_foot.urdf`](models/q1/q1_wheel_foot.urdf)
+
 
 ## Quick links
 
@@ -146,14 +184,14 @@ python -c "from q1_sdk import LocoClient; print(LocoClient.__doc__)"
 ```cpp
 #include <q1/robot/loco/loco_client.hpp>
 
-int main() {
-  q1::ChannelFactory::Instance()->Init(/*domain*/0, "eth0");
+int main {
+  q1::ChannelFactory::Instance->Init(/*domain*/0, "eth0");
   q1::robot::LocoClient loco;
-  loco.Init();
+  loco.Init;
   loco.SetTimeout(5.f);
-  loco.Standby();                 // soft hold
+  loco.Standby;                 // soft hold
   loco.SetVelocity(0.2f, 0.f, 0.3f, /*duration*/2.f);  // vx, vy, yaw
-  loco.StopMove();
+  loco.StopMove;
   return 0;
 }
 ```
@@ -162,7 +200,7 @@ int main() {
 from q1_sdk import LocoClient, InteractionClient
 
 loco = LocoClient(iface="eth0")
-loco.standby()
+loco.standby
 loco.set_velocity(vx=0.15, vy=0.0, vyaw=0.0, duration=1.5)
 
 ix = InteractionClient(iface="eth0")

@@ -1,0 +1,159 @@
+<mujoco model="q1_wheel_foot">
+  <!-- Quanta Computer Q1 Edu — transformable wheel-foot humanoid -->
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast"/>
+
+  <visual>
+    <headlight diffuse="0.7 0.7 0.7" ambient="0.25 0.25 0.25"/>
+    <rgba haze="0.15 0.2 0.25 1"/>
+  </visual>
+
+  <default>
+    <joint damping="1.5" armature="0.02"/>
+    <geom friction="1.4 0.1 0.01" condim="3" solref="0.02 1"/>
+    <motor ctrllimited="true" ctrlrange="-40 40"/>
+    <position kp="120" ctrllimited="true"/>
+  </default>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker"
+             rgb1="0.18 0.24 0.30" rgb2="0.12 0.16 0.20" width="512" height="512"/>
+    <material name="grid" texture="grid" texrepeat="10 10" reflectance="0.05"/>
+    <material name="suit" rgba="0.78 0.80 0.83 1"/>
+    <material name="head" rgba="0.07 0.08 0.09 1"/>
+    <material name="eye" rgba="0.15 0.9 0.95 1" emission="0.5"/>
+    <material name="wheelmat" rgba="0.1 0.1 0.12 1"/>
+    <material name="qdd" rgba="0.28 0.30 0.34 1"/>
+    <material name="hand" rgba="0.92 0.93 0.95 1"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 4" dir="0 0 -1" diffuse="0.85 0.85 0.85"/>
+    <light pos="2.5 1.5 3" dir="-1 -0.5 -1" diffuse="0.35 0.4 0.45"/>
+    <geom name="floor" type="plane" size="20 20 0.05" material="grid"/>
+
+    <body name="pelvis" pos="0 0 0.78">
+      <freejoint name="root"/>
+      <inertial pos="0 0 0.05" mass="8" diaginertia="0.12 0.10 0.08"/>
+      <geom type="capsule" fromto="0 -0.07 0.04 0 0.07 0.04" size="0.09" material="suit"/>
+      <geom type="capsule" fromto="0 -0.06 0.04 0 0.06 0.04" size="0.08" group="3" rgba="0.5 0.5 0.5 0.2"/>
+
+      <body name="torso" pos="0 0 0.10">
+        <inertial pos="0 0 0.15" mass="6" diaginertia="0.08 0.07 0.05"/>
+        <joint name="waist_yaw" type="hinge" axis="0 0 1" range="-0.5 0.5"/>
+        <geom type="capsule" fromto="0 0 0 0 0 0.30" size="0.10" material="suit"/>
+
+        <body name="head" pos="0 0 0.40">
+          <inertial pos="0 0 0" mass="1.2" diaginertia="0.01 0.01 0.01"/>
+          <joint name="neck" type="hinge" axis="0 1 0" range="-0.35 0.35"/>
+          <geom type="ellipsoid" size="0.085 0.075 0.095" material="head"/>
+          <geom name="eye_l" type="sphere" pos="0.055 0.032 0.01" size="0.016" material="eye"/>
+          <geom name="eye_r" type="sphere" pos="0.055 -0.032 0.01" size="0.016" material="eye"/>
+        </body>
+
+        <!-- arms (visual + light dynamics) -->
+        <body name="l_upper_arm" pos="0 0.17 0.24">
+          <joint name="l_shoulder" type="hinge" axis="0 1 0" range="-2.2 1.2"/>
+          <geom type="cylinder" size="0.038 0.022" quat="0.707 0.707 0 0" material="qdd"/>
+          <geom type="capsule" fromto="0 0.02 0 0 0.02 -0.22" size="0.038" material="suit"/>
+          <body name="l_forearm" pos="0 0.02 -0.22">
+            <joint name="l_elbow" type="hinge" axis="0 1 0" range="-2.3 0"/>
+            <geom type="capsule" fromto="0 0 0 0 0 -0.20" size="0.032" material="suit"/>
+            <body name="l_hand" pos="0 0 -0.22">
+              <geom type="sphere" size="0.028" material="hand"/>
+              <geom type="capsule" fromto="0.015 0.02 0 0.055 0.04 -0.035" size="0.009" material="hand"/>
+              <geom type="capsule" fromto="0.015 0 0 0.06 0 -0.035" size="0.009" material="hand"/>
+              <geom type="capsule" fromto="0.015 -0.02 0 0.055 -0.04 -0.035" size="0.009" material="hand"/>
+            </body>
+          </body>
+        </body>
+
+        <body name="r_upper_arm" pos="0 -0.17 0.24">
+          <joint name="r_shoulder" type="hinge" axis="0 1 0" range="-2.2 1.2"/>
+          <geom type="cylinder" size="0.038 0.022" quat="0.707 0.707 0 0" material="qdd"/>
+          <geom type="capsule" fromto="0 -0.02 0 0 -0.02 -0.22" size="0.038" material="suit"/>
+          <body name="r_forearm" pos="0 -0.02 -0.22">
+            <joint name="r_elbow" type="hinge" axis="0 1 0" range="-2.3 0"/>
+            <geom type="capsule" fromto="0 0 0 0 0 -0.20" size="0.032" material="suit"/>
+            <body name="r_hand" pos="0 0 -0.22">
+              <geom type="sphere" size="0.028" material="hand"/>
+              <geom type="capsule" fromto="0.015 0.02 0 0.055 0.04 -0.035" size="0.009" material="hand"/>
+              <geom type="capsule" fromto="0.015 0 0 0.06 0 -0.035" size="0.009" material="hand"/>
+              <geom type="capsule" fromto="0.015 -0.02 0 0.055 -0.04 -0.035" size="0.009" material="hand"/>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <!-- LEFT LEG -->
+      <body name="l_thigh" pos="0 0.095 -0.02">
+        <inertial pos="0 0 -0.12" mass="3.5" diaginertia="0.03 0.03 0.01"/>
+        <joint name="l_hip" type="hinge" axis="0 1 0" range="-1.3 1.3"/>
+        <geom type="cylinder" size="0.04 0.025" quat="0.707 0.707 0 0" material="qdd"/>
+        <geom type="capsule" fromto="0 0 0 0 0 -0.30" size="0.048" material="suit"/>
+        <body name="l_shank" pos="0 0 -0.30">
+          <inertial pos="0 0 -0.12" mass="2.5" diaginertia="0.02 0.02 0.008"/>
+          <joint name="l_knee" type="hinge" axis="0 1 0" range="0 2.2"/>
+          <geom type="cylinder" size="0.036 0.022" quat="0.707 0.707 0 0" material="qdd"/>
+          <geom type="capsule" fromto="0 0 0 0 0 -0.30" size="0.038" material="suit"/>
+          <body name="l_ankle" pos="0 0 -0.30">
+            <inertial pos="0 0 0" mass="0.8" diaginertia="0.004 0.004 0.004"/>
+            <joint name="l_ankle" type="hinge" axis="0 1 0" range="-1.0 0.8"/>
+            <!-- 0 = wheel mode (cylinder axis along Y); pi/2 = biped (wheel tilted / sole down) -->
+            <joint name="l_transform" type="hinge" axis="1 0 0" range="0 1.5708" damping="8"/>
+            <geom type="cylinder" size="0.032 0.018" quat="0.707 0 0.707 0" material="qdd"/>
+            <body name="l_wheel" pos="0 0 0">
+              <inertial pos="0 0 0" mass="1.0" diaginertia="0.004 0.006 0.004"/>
+              <joint name="l_wheel" type="hinge" axis="0 1 0" damping="0.15"/>
+              <geom name="l_wheel_g" type="cylinder" size="0.095 0.032" material="wheelmat"
+                    friction="1.8 0.1 0.005"/>
+              <geom name="l_sole" type="box" size="0.085 0.05 0.012" pos="0 0 -0.10"
+                    rgba="0.18 0.18 0.2 1" friction="1.6 0.1 0.005"/>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <!-- RIGHT LEG -->
+      <body name="r_thigh" pos="0 -0.095 -0.02">
+        <inertial pos="0 0 -0.12" mass="3.5" diaginertia="0.03 0.03 0.01"/>
+        <joint name="r_hip" type="hinge" axis="0 1 0" range="-1.3 1.3"/>
+        <geom type="cylinder" size="0.04 0.025" quat="0.707 0.707 0 0" material="qdd"/>
+        <geom type="capsule" fromto="0 0 0 0 0 -0.30" size="0.048" material="suit"/>
+        <body name="r_shank" pos="0 0 -0.30">
+          <inertial pos="0 0 -0.12" mass="2.5" diaginertia="0.02 0.02 0.008"/>
+          <joint name="r_knee" type="hinge" axis="0 1 0" range="0 2.2"/>
+          <geom type="cylinder" size="0.036 0.022" quat="0.707 0.707 0 0" material="qdd"/>
+          <geom type="capsule" fromto="0 0 0 0 0 -0.30" size="0.038" material="suit"/>
+          <body name="r_ankle" pos="0 0 -0.30">
+            <inertial pos="0 0 0" mass="0.8" diaginertia="0.004 0.004 0.004"/>
+            <joint name="r_ankle" type="hinge" axis="0 1 0" range="-1.0 0.8"/>
+            <joint name="r_transform" type="hinge" axis="1 0 0" range="0 1.5708" damping="8"/>
+            <geom type="cylinder" size="0.032 0.018" quat="0.707 0 0.707 0" material="qdd"/>
+            <body name="r_wheel" pos="0 0 0">
+              <inertial pos="0 0 0" mass="1.0" diaginertia="0.004 0.006 0.004"/>
+              <joint name="r_wheel" type="hinge" axis="0 1 0" damping="0.15"/>
+              <geom name="r_wheel_g" type="cylinder" size="0.095 0.032" material="wheelmat"
+                    friction="1.8 0.1 0.005"/>
+              <geom name="r_sole" type="box" size="0.085 0.05 0.012" pos="0 0 -0.10"
+                    rgba="0.18 0.18 0.2 1" friction="1.6 0.1 0.005"/>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <motor name="l_drive" joint="l_wheel" gear="10"/>
+    <motor name="r_drive" joint="r_wheel" gear="10"/>
+    <position name="l_tf" joint="l_transform" kp="200" ctrlrange="0 1.5708"/>
+    <position name="r_tf" joint="r_transform" kp="200" ctrlrange="0 1.5708"/>
+    <position name="l_hip_act" joint="l_hip" kp="150" ctrlrange="-1.3 1.3"/>
+    <position name="r_hip_act" joint="r_hip" kp="150" ctrlrange="-1.3 1.3"/>
+    <position name="l_knee_act" joint="l_knee" kp="200" ctrlrange="0 2.2"/>
+    <position name="r_knee_act" joint="r_knee" kp="200" ctrlrange="0 2.2"/>
+    <position name="l_ankle_act" joint="l_ankle" kp="80" ctrlrange="-1.0 0.8"/>
+    <position name="r_ankle_act" joint="r_ankle" kp="80" ctrlrange="-1.0 0.8"/>
+  </actuator>
+</mujoco>
