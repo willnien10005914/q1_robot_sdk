@@ -1,0 +1,7 @@
+strokes:
+  heng:
+    description: horizontal brush stroke
+    duration_s: 2.0
+  shu:
+    description: vertical brush stroke
+    duration_s: 2.0

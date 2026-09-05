@@ -1,0 +1,17 @@
+add_executable(q1_helloworld helloworld/helloworld.cpp)
+target_link_libraries(q1_helloworld PRIVATE q1_sdk)
+
+add_executable(q1_loco_example high_level/loco_example.cpp)
+target_link_libraries(q1_loco_example PRIVATE q1_sdk)
+
+add_executable(q1_user_ctrl_example low_level/user_ctrl_example.cpp)
+target_link_libraries(q1_user_ctrl_example PRIVATE q1_sdk)
+
+add_executable(q1_usecase_piano use_cases/piano/piano_example.cpp)
+target_link_libraries(q1_usecase_piano PRIVATE q1_sdk)
+
+add_executable(q1_usecase_calligraphy use_cases/calligraphy/calligraphy_example.cpp)
+target_link_libraries(q1_usecase_calligraphy PRIVATE q1_sdk)
+
+add_executable(q1_usecase_soft_baseball use_cases/soft_baseball/soft_baseball_example.cpp)
+target_link_libraries(q1_usecase_soft_baseball PRIVATE q1_sdk)

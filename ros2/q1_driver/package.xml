@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>q1_driver</name>
+  <version>0.1.0</version>
+  <description>Q1 DDS to ROS 2 bridge (Pre-SDK stub)</description>
+  <maintainer email="willnien@gmail.com">Q1 Team</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_python</buildtool_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>q1_msgs</exec_depend>
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

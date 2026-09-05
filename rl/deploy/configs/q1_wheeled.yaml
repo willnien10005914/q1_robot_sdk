@@ -1,0 +1,10 @@
+task: q1_wheeled
+policy_path: logs/q1_wheeled/exported/policies/policy_1.pt
+control_dt: 0.02
+action_scale: 0.25
+obs_scales:
+  ang_vel: 0.25
+  lin_vel: 2.0
+sim:
+  backend: mujoco
+  model: ../../sim/mujoco/models/q1_wheeled.xml

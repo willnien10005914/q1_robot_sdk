@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="q1">
+  <link name="base_link">
+    <visual>
+      <geometry><box size="0.50 0.36 0.16"/></geometry>
+    </visual>
+  </link>
+  <link name="wheel_left"/>
+  <link name="wheel_right"/>
+  <joint name="wheel_left_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_left"/>
+    <origin xyz="0 0.18 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="wheel_right_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_right"/>
+    <origin xyz="0 -0.18 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <!-- Dual 7-DoF arms: full meshes in Official SDK -->
+</robot>

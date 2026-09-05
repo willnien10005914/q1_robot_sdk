@@ -1,0 +1,16 @@
+build/
+cmake-build-*/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+install/
+log/
+logs/
+.vscode/
+.idea/
+*.user
+.DS_Store
+*.pt
+*.onnx

@@ -1,0 +1,4 @@
+task: q1_arm_reach
+policy_path: logs/q1_arm_reach/exported/policies/policy_1.pt
+control_dt: 0.02
+action_scale: 0.5

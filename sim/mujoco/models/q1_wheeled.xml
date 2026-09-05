@@ -1,0 +1,22 @@
+<!-- Minimal MuJoCo placeholder for Q1 dual-wheel base -->
+<mujoco model="q1_wheeled">
+  <option timestep="0.002"/>
+  <worldbody>
+    <body name="base_link" pos="0 0 0.15">
+      <freejoint/>
+      <geom type="box" size="0.25 0.18 0.08" rgba="0.2 0.4 0.8 1"/>
+      <body name="wheel_left" pos="0 0.18 0">
+        <joint name="wheel_left_joint" type="hinge" axis="0 1 0"/>
+        <geom type="cylinder" size="0.08 0.03" rgba="0.1 0.1 0.1 1"/>
+      </body>
+      <body name="wheel_right" pos="0 -0.18 0">
+        <joint name="wheel_right_joint" type="hinge" axis="0 1 0"/>
+        <geom type="cylinder" size="0.08 0.03" rgba="0.1 0.1 0.1 1"/>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor joint="wheel_left_joint" gear="8"/>
+    <motor joint="wheel_right_joint" gear="8"/>
+  </actuator>
+</mujoco>

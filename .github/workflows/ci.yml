@@ -1,0 +1,34 @@
+name: ci
+on:
+  push:
+    branches: [main, "cursor/**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-cpp:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y cmake g++ build-essential
+      - name: Configure & build
+        run: |
+          mkdir build && cd build
+          cmake .. -DBUILD_EXAMPLES=ON -DQ1_ENABLE_MOCK=ON
+          cmake --build . -j$(nproc)
+      - name: Run helloworld mock
+        run: ./build/bin/q1_helloworld --mock
+
+  python:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install & smoke
+        run: |
+          cd python && pip install -e .
+          python -c "from q1_sdk import LocoClient, InteractionClient; print(LocoClient().standby(), InteractionClient().list_actions()[:2])"
+          python ../example/helloworld/helloworld.py --mock
