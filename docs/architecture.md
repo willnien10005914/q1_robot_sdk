@@ -1,13 +1,15 @@
 # Architecture
 
-## Design principles (Edu-class-inspired, Q1-native)
+## Design principles (Education edition)
 
-Q1 follows the same developer-facing split that typical Edu humanoid users learn:
+Q1 Education SDK exposes the same developer-facing split used for secondary development:
 
-1. **High-level service clients** — JSON request/response over DDS (`sport` / `arm` / `interaction` services).
-2. **Low-level realtime topics** — `rt/lowcmd`, `rt/lowstate` for joint/wheel setpoints when a lease is held.
+1. **High-level service clients** — JSON request/response over DDS (`sport` / `arm` / `interaction` services). Available on Standard and Education.
+2. **Low-level realtime topics** — `rt/lowcmd`, `rt/lowstate` for joint/wheel setpoints when a **UserCtrl lease** is held (**Education** only).
 3. **ROS 2 as a peer** — optional bridge; keep robot DDS domain isolated from the ROS graph when needed.
-4. **RL deploy chain** — Train → Play → Sim2Sim → Sim2Real.
+4. **RL / VLA deploy chain** — PPO Train → Play → Sim2Sim → Sim2Real; VLA fine-tune → action head (**Education**).
+
+Standard units stay on high-level predefined packs without motor-parameter or `rt/lowcmd` access. See [editions.md](editions.md).
 
 ## Process view
 
@@ -16,14 +18,14 @@ Q1 follows the same developer-facing split that typical Edu humanoid users learn
 │  User App (C++/Python)                                                 │
 │    └─ q1::LocoClient / ArmClient / InteractionClient                   │
 │  ROS 2 nodes (q1_driver, teleop) ──optional──┐                         │
-│  RL deploy_real.py                            │                        │
+│  PPO deploy_real.py / VLA runtime             │                        │
 └─────────────────────── DDS / CycloneDDS ──────┼────────────────────────┘
                                                 │ domain 0 (robot bus)
 ┌──────────────────────────── Q1 Onboard ───────┼────────────────────────┐
 │  Motion Manager (sport service)               │                        │
 │  Arm Manager                                   │                        │
 │  Safety Supervisor (estop, torque limits)      │                        │
-│  Wheel MCU + Arm MCUs ◄── rt/lowcmd / lowstate ┘                       │
+│  Wheel MCU + Arm MCUs ◄── rt/lowcmd / lowstate ┘  (Education UserCtrl) │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -31,42 +33,18 @@ Q1 follows the same developer-facing split that typical Edu humanoid users learn
 
 | Mode | How to enter | Topics / APIs | Typical use |
 |------|--------------|---------------|-------------|
-| **Internal** | Boot / `SwitchToInternalCtrl` | High-level `SetVelocity`, actions | Default EDU demos |
-| **UserCtrl** | `SwitchToUserCtrl` (lease) | Publish `rt/lowcmd`, read `rt/lowstate` | Custom RL / teleop |
+| **Internal** | Boot / `SwitchToInternalCtrl` | High-level `SetVelocity`, actions | Default demos (Standard + Education) |
+| **UserCtrl** | `SwitchToUserCtrl` (lease) | Publish `rt/lowcmd`, read `rt/lowstate` | Custom PPO / teleop / VLA (**Education**) |
 | **Passive / Damp** | `Damp()` | Motors impedance hold | Safe idle |
 
-This mirrors Q1's Internal / UserCtrl / Low-level split, with wheeled kinematics instead of biped balance as the internal controller core for 2026–2027.
+Wheeled kinematics are the internal controller core for 2026–2027; biped modes follow on the next-gen track.
 
 ## Topic map (DDS)
 
-| Topic | Direction | Payload (conceptual) |
-|-------|-----------|----------------------|
-| `rt/lowstate` | Robot → App | IMU, wheel encoders, joint q/dq, battery, FSM |
-| `rt/lowcmd` | App → Robot | Wheel τ/ω targets + arm PD targets (UserCtrl) |
-| `rt/odom` | Robot → App | Planar odometry (x, y, yaw) |
-| `rt/sport/request` / `rt/sport/response` | Bidirectional | High-level loco API |
-| `rt/arm/request` / `rt/arm/response` | Bidirectional | Arm action API |
-| `rt/interaction/request` | Bidirectional | Named action packs |
-| `rt/wireless_controller` | Robot → App | Gamepad / deadman |
+See the Develop Guide [DDS chapter](develop_guide/02_dds.md) for `rt/*` names and QoS defaults.
 
-## Coordinate frames
+## Safety leases
 
-| Frame | Convention |
-|-------|------------|
-| `base_link` | FLU (forward-left-up), origin at wheel axle midpoint |
-| `odom` | Planar world, z-up |
-| Arm joints | Right-handed, URDF order in `assets/urdf/q1.urdf` |
-
-## Safety supervisor
-
-- Heartbeat: client must refresh lease ≤ 500 ms in UserCtrl.
-- Velocity clamps: `vx ∈ [-1.2, 1.2] m/s`, `|vyaw| ≤ 2.0 rad/s` (pre-SDK defaults).
-- Interaction packs: end-effector Cartesian speed ≤ 0.35 m/s; soft-toy baseball mode disables hard contacts.
-
-## Simulation parity
-
-| Sim | Role |
-|-----|------|
-| Isaac Gym / Isaac Lab | Parallel RL training |
-| MuJoCo | Sim2Sim validation |
-| Mock DDS (`q1::mock`) | CI without hardware |
+- Only one UserCtrl lease holder may publish `rt/lowcmd`.
+- Heartbeat timeout drops the lease and returns Internal / Damp.
+- Motor parameter writes on Education units are rate-limited and clamped by the safety supervisor.

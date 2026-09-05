@@ -1,6 +1,6 @@
 # 08 — Sim-to-Sim
 
-Sim2Sim checks that a policy is not overfit to one simulator’s quirks (same step Edu RL users take with MuJoCo after Isaac Gym).
+Sim2Sim checks that a policy is not overfit to one simulator’s quirks (e.g. validate Isaac/Gym policies in MuJoCo before Sim2Real).
 
 ## Flow
 

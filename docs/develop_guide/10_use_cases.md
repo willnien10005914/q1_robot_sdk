@@ -1,6 +1,6 @@
 # 10 — Use Cases (Home Interaction)
 
-Pre-SDK showcases three **family-safe** actions for CES storytelling and Edu practice. Packs are named skills on `InteractionClient`.
+Pre-SDK showcases three **family-safe** actions for CES storytelling and Education-edition bring-up. Packs are named skills on `InteractionClient` (runnable as predefined packs on Standard; retrainable on Education).
 
 ## 1) Piano
 

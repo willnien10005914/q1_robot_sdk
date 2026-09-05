@@ -1,6 +1,6 @@
 # 03 — ROS 2
 
-ROS 2 is the **application layer** many Edu users prefer for navigation, visualization, and tooling. Q1 exposes a thin bridge; the robot’s native bus remains DDS.
+ROS 2 is an optional **application layer** for navigation, visualization, and tooling. Q1 exposes a thin bridge; the robot’s native bus remains DDS.
 
 ## Packages
 

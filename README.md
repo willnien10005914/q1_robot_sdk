@@ -4,20 +4,32 @@
 
 # Q1 Robot SDK
 
-**Q1** is a transformable wheel-foot education humanoid designed and manufactured by **Quanta Computer** (MIT Taiwan). This repository is the public SDK: DDS realtime bus, high-level clients, ROS 2, and RL Train→Play→Sim2Sim→Sim2Real.
+**Q1** is a transformable wheel-foot humanoid from **Quanta Computer** (MIT Taiwan). This repository is the public **Education-edition SDK** for secondary development: DDS realtime bus, high-level clients, ROS 2, **PPO** RL (Train→Play→Sim2Sim→Sim2Real), and **VLA** (Vision–Language–Action) hooks.
 
 
 > **Status:** Pre-SDK architecture (v0.x) — API surface, docs, examples, and CES 2027 wheeled roadmap.  
-> **Target:** Official SDK + physical deploy when EDU units ship.  
+> **Target:** Official SDK + physical deploy when Education units ship.  
 > **CES goal:** Dual-wheel Q1 demo track for **CES 2027**.
 
-## Concept demo (Edu wheel-foot Q1)
+## Standard vs Education
 
-Consistent **Quanta Computer** native design: matte **black dual-camera head**, soft fabric skinsuit, **QDD series** actuators, **3-finger dexterous hand**, and **wheel ↔ biped** transformable feet. Education-first: schools train once; customers fine-tune for home clean/organize, logistics, sports, calligraphy, and piano.
+| | **Standard** | **Education** (developer edition) |
+|--|--------------|-----------------------------------|
+| Motor parameters | Locked | Tunable (gains / limits / clamps) |
+| Motion | Predefined actions / motions only | Custom control + new skills |
+| Low-level API | Not exposed | `UserCtrl` lease → `rt/lowcmd` / `rt/lowstate` |
+| RL | Factory policy playback | **PPO** train new loco / manip skills |
+| VLA | Optional demos only | Fine-tune & deploy Vision–Language–Action policies |
+
+Full matrix: [docs/editions.md](docs/editions.md). This SDK documents the **Education** track.
+
+## Concept demo (Education wheel-foot Q1)
+
+Consistent **Quanta Computer** native design: matte **black dual-camera head**, soft fabric skinsuit, **QDD series** actuators, **3-finger dexterous hand**, and **wheel ↔ biped** transformable feet. The Education edition unlocks motor-parameter access, PPO skill training, and VLA pipelines so partners can build secondary applications (home clean/organize, logistics, sports, calligraphy, piano, and more).
 
 
 <p align="center">
-  <img src="media/q1_edu_wheel_demo.gif" alt="Q1 Edu wheel-foot humanoid concept demo" width="960" />
+  <img src="media/q1_edu_wheel_demo.gif" alt="Q1 Education wheel-foot humanoid concept demo" width="960" />
 </p>
 
 <p align="center">
@@ -32,7 +44,7 @@ Consistent **Quanta Computer** native design: matte **black dual-camera head**, 
 <summary>HTML5 video player (click to expand)</summary>
 
 <video src="media/q1_edu_wheel_demo.mp4" controls muted loop playsinline width="960" poster="media/q1_edu_wheel_demo_poster.png">
-  <a href="media/q1_edu_wheel_demo.mp4">Download the Q1 Edu concept demo (MP4)</a>
+  <a href="media/q1_edu_wheel_demo.mp4">Download the Q1 Education concept demo (MP4)</a>
 </video>
 
 </details>
@@ -50,7 +62,7 @@ Consistent **Quanta Computer** native design: matte **black dual-camera head**, 
 </tr>
 <tr>
 <td><b>It transforms.</b> Ankle reconfiguration between wheel drive and biped feet.</td>
-<td><b>It learns locomotion.</b> Train wheel, walk, hop, turn, and more in the Edu RL path.</td>
+<td><b>It learns locomotion.</b> Education edition: PPO / VLA train wheel, walk, hop, turn, and more.</td>
 </tr>
 </table>
 
@@ -58,13 +70,13 @@ Consistent **Quanta Computer** native design: matte **black dual-camera head**, 
 |-------|------------|
 | Wheel ↔ Biped transform | Native wheel-foot reconfiguration |
 | Wheel-foot mobility | `LocoClient` + **QDD** joint torque / wheel roll |
-| Education lab | Classroom bring-up + teleop |
-| Customer fine-tune | RL / imitation train → deploy |
-| Home clean & organize | Customer-trained household pack |
+| Lab bring-up | SDK install, teleop, mock → real bus |
+| Secondary development | Tune motors · PPO new skills · VLA policies |
+| Home clean & organize | Partner-trained household pack |
 | Logistics & cargo | Carry / last-meter transport pack |
 | Performance sports | **3-finger** soft-ball toss / play demos |
 | Calligraphy | **3-finger** brush cultural pack |
-| Piano | **3-finger** music classroom pack |
+| Piano | **3-finger** music demo pack |
 
 | Layer | What you get |
 |-------|----------------|
@@ -74,8 +86,9 @@ Consistent **Quanta Computer** native design: matte **black dual-camera head**, 
 | **Basic motion** | Wheel-foot loco + **QDD** joint control, soft-stop, arm trajectories |
 | **Dexterous hand** | 3-finger end-effector API (grasp / brush / key press) |
 | **Manufacture** | **Quanta Computer** · MIT Taiwan native design |
-| **RL / AI** | `q1_rl_gym` — Train → Play → Sim2Sim → Sim2Real |
-| **Use cases** | Edu train → home clean / logistics / sports / calligraphy / piano |
+| **RL / AI** | `q1_rl_gym` — PPO Train → Play → Sim2Sim → Sim2Real |
+| **VLA** | Vision–Language–Action adapters (obs → language goal → action) |
+| **Use cases** | Education-edition train → deploy custom packs |
 
 ---
 
@@ -119,7 +132,8 @@ Models:
 
 ## Quick links
 
-- **[SDK Develop Guide](docs/develop_guide/index.md)** — start here (ROS · DDS · API · motion · RL · AI · Sim2Sim · Sim2Real)
+- **[SDK Develop Guide](docs/develop_guide/index.md)** — start here (ROS · DDS · API · motion · RL · VLA · Sim2Sim · Sim2Real)
+- **[Standard vs Education](docs/editions.md)** — motor unlock, PPO, VLA matrix
 - **[Roadmap & Milestones](docs/roadmap.md)** — wheeled (this year) → biped + dexterous hand (next year)
 - **[Architecture](docs/architecture.md)** — process layout, domains, safety
 - **[GitHub Milestones](https://github.com/willnien10005914/q1_robot_sdk/milestones)** — tracked release gates
@@ -133,8 +147,8 @@ Models:
 2026-10  Pre-SDK releases begin (API skeleton + use-case demos)
 2026-Q4  Wheeled locomotion + interaction action packs (piano / calligraphy / soft baseball)
 2027-01  CES 2027 dual-wheel showcase
-2027     Official SDK 1.0 — deploy to physical Q1 EDU
-2027+    Biped platform + dexterous hand manipulation SDK track
+2027     Official SDK 1.0 — deploy to physical Q1 Education
+2027+    Biped platform + dexterous hand + VLA skill track
 ```
 
 ---
@@ -147,7 +161,7 @@ q1_robot_sdk/
 ├── python/q1_sdk/       # Python client (pre-SDK)
 ├── example/             # Hello world, high/low level, use cases
 ├── ros2/                # ROS 2 packages
-├── rl/                  # RL gym + deploy (sim2sim / sim2real)
+├── rl/                  # PPO gym + deploy (sim2sim / sim2real)
 ├── playground/          # MuJoCo + browser demos
 ├── models/q1/           # URDF / MJCF
 ├── media/               # Concept demo + cartoon homepage loops
@@ -228,14 +242,14 @@ loco.standby()
 loco.set_velocity(vx=0.15, vy=0.0, vyaw=0.0, duration=1.5)
 
 ix = InteractionClient(iface="eth0")
-ix.play_action("soft_baseball_toss")  # home kid-safe pack
+ix.play_action("soft_baseball_toss")  # predefined pack (also available on Standard)
 ```
 
 ---
 
-## Develop Guide map (Edu path)
+## Develop Guide map (Education edition)
 
-Q1 Edu learning path:
+Developer on-ramp for the Education SDK:
 
 | Chapter | Topic |
 |---------|-------|
@@ -244,8 +258,8 @@ Q1 Edu learning path:
 | 3 | [ROS 2 integration](docs/develop_guide/03_ros.md) |
 | 4 | [High / low-level API](docs/develop_guide/04_api.md) |
 | 5 | [Basic motion](docs/develop_guide/05_basic_motion.md) |
-| 6 | [Reinforcement learning](docs/develop_guide/06_rl.md) |
-| 7 | [AI training workflow](docs/develop_guide/07_ai_training.md) |
+| 6 | [Reinforcement learning (PPO)](docs/develop_guide/06_rl.md) |
+| 7 | [AI training & VLA](docs/develop_guide/07_ai_training.md) |
 | 8 | [Sim-to-Sim](docs/develop_guide/08_sim_to_sim.md) |
 | 9 | [Sim-to-Real](docs/develop_guide/09_sim_to_real.md) |
 | 10 | [Use cases](docs/develop_guide/10_use_cases.md) (piano · calligraphy · soft baseball) |
@@ -255,8 +269,8 @@ Q1 Edu learning path:
 ## Safety (always on)
 
 - Deadman / soft-estop on wireless + DDS heartbeat timeout (default 500 ms).
-- Kid-interaction packs clamp end-effector speed and contact force estimates.
-- Low-level `rt/lowcmd` requires an explicit `SwitchToUserCtrl` lease.
+- Interaction packs clamp end-effector speed and contact force estimates.
+- Low-level `rt/lowcmd` requires an explicit `SwitchToUserCtrl` lease (**Education** only).
 
 ---
 
