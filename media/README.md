@@ -9,6 +9,12 @@
 | `q1_edu_wheel_demo_poster.png` | Poster frame |
 | `playground/q1_mujoco_keyboard_demo.mp4` | Headless MuJoCo keyboard-scripted demo |
 
+## Architecture
+
+| File | Role |
+|------|------|
+| `architecture/q1_compute_control_architecture.png` | README system architecture diagram (SoC · ROS 2 · RT MCU · actuators) |
+
 ## Hardware (Education SoC EVKs)
 
 | File | Role |

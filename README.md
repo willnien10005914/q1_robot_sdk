@@ -125,6 +125,25 @@ Education units ship with an edge AI SoC for onboard PPO / VLA inference and fin
 
 ---
 
+## System architecture diagram
+
+Q1 Education compute & control stack: SoC (API / planning / VLA / PPO policies / state estimation / ROS 2) → serial link → real-time MCU (STM32H7-class) → CAN FD / EtherCAT → joint modules.
+
+<p align="center">
+  <img src="media/architecture/q1_compute_control_architecture.png" alt="Q1 humanoid compute and control architecture — SoC, ROS 2, real-time MCU, CAN FD / EtherCAT actuators" width="960">
+</p>
+
+| Block | Role |
+|-------|------|
+| **SoC (CPU)** | Direct / motion control APIs, generative AI (motion diffusion · VLA), PPO pretrained behaviors & retargeting, state estimator, ROS 2 (DDS) |
+| **Serial link** | Motor commands down · sensor data up (SoC ↔ real-time controller) |
+| **Real-time controller** | Torque/velocity loops, safety limits, CAN FD / EtherCAT master, 1–4 kHz control / 20–40 kHz FOC |
+| **Actuators** | Joint modules on CAN FD (robust) and/or EtherCAT (high performance) |
+
+Details: [docs/architecture.md](docs/architecture.md).
+
+---
+
 ## MuJoCo playground (keyboard)
 
 Interactive demo of the Q1 URDF/MJCF with **wheel ↔ biped transform** and drive.
@@ -168,7 +187,7 @@ Models:
 - **[SDK Develop Guide](docs/develop_guide/index.md)** — start here (ROS · DDS · API · motion · RL · VLA · Sim2Sim · Sim2Real)
 - **[Standard vs Education](docs/editions.md)** — motor unlock, PPO, VLA matrix
 - **[Roadmap & Milestones](docs/roadmap.md)** — wheeled (this year) → biped + dexterous hand (next year)
-- **[Architecture](docs/architecture.md)** — process layout, domains, safety
+- **[Architecture](docs/architecture.md)** — process layout, domains, safety · [system diagram](media/architecture/q1_compute_control_architecture.png)
 - **[GitHub Milestones](https://github.com/willnien10005914/q1_robot_sdk/milestones)** — tracked release gates
 - **[Colab wheel train](colab/q1_mujoco_playground_wheel_train.ipynb)** — structure → URDF/MJCF → PPO forward/back
 
