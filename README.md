@@ -187,7 +187,7 @@ Models:
 - **[SDK Develop Guide](docs/develop_guide/index.md)** — start here (ROS · DDS · API · motion · RL · VLA · Sim2Sim · Sim2Real)
 - **[Standard vs Education](docs/editions.md)** — motor unlock, PPO, VLA matrix
 - **[Roadmap & Milestones](docs/roadmap.md)** — wheeled (this year) → biped + dexterous hand (next year)
-- **[Architecture](docs/architecture.md)** — process layout, domains, safety
+- **[Architecture](docs/architecture.md)** — process layout, domains, safety · [system diagram](media/architecture/q1_compute_control_architecture.png)
 - **[GitHub Milestones](https://github.com/willnien10005914/q1_robot_sdk/milestones)** — tracked release gates
 - **[Colab wheel train](colab/q1_mujoco_playground_wheel_train.ipynb)** — structure → URDF/MJCF → PPO forward/back
 
